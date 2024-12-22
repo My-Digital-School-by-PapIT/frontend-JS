@@ -1,0 +1,63 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.1 Chrome/128.0.6613.186 Electron/32.2.6 Safari/537.36" version="25.0.1">
+  <diagram name="Page-1" id="h8Pk-Ec_L9b_7ux0lojJ">
+    <mxGraphModel dx="858" dy="455" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JMQ2rB71Vb1QW5Y3Cyl6-1" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.webicons.chrome;gradientColor=#DFDEDE;labelBackgroundColor=none;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="250" y="200" width="103.2" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="JMQ2rB71Vb1QW5Y3Cyl6-3" value="HTML" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.script_file;pointerEvents=1;labelBackgroundColor=none;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="277.85" y="130" width="47.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="JMQ2rB71Vb1QW5Y3Cyl6-10" value="Langage Backend&lt;div&gt;JS, Python, PHP, Java, ...&lt;/div&gt;" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.script_file;pointerEvents=1;labelBackgroundColor=none;fontColor=#000000;" parent="1" vertex="1">
+          <mxGeometry x="537.5" y="90" width="47.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="JMQ2rB71Vb1QW5Y3Cyl6-13" value="HTTP&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;POST&lt;/span&gt;" style="endArrow=classic;startArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;startFill=0;verticalAlign=top;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="280" as="sourcePoint" />
+            <mxPoint x="497.5" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JMQ2rB71Vb1QW5Y3Cyl6-14" value="HTTP GET" style="endArrow=none;startArrow=classic;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;verticalAlign=bottom;endFill=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0024" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="218.7" as="sourcePoint" />
+            <mxPoint x="497.5" y="218.7" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGI6W3BUXigs60Nd6Iuy-1" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/generic_server.svg;" parent="1" vertex="1">
+          <mxGeometry x="510" y="188.5" width="71.12" height="127" as="geometry" />
+        </mxCell>
+        <mxCell id="pGI6W3BUXigs60Nd6Iuy-2" value="" style="image;aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image=img/lib/active_directory/database.svg;" parent="1" vertex="1">
+          <mxGeometry x="720" y="218.7" width="90" height="66.6" as="geometry" />
+        </mxCell>
+        <mxCell id="pGI6W3BUXigs60Nd6Iuy-4" value="SQL INSERT" style="endArrow=classic;startArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;startFill=0;verticalAlign=top;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="585" y="280" as="sourcePoint" />
+            <mxPoint x="710" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pGI6W3BUXigs60Nd6Iuy-5" value="SQL SELECT" style="endArrow=none;startArrow=classic;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;verticalAlign=bottom;endFill=0;" parent="1" edge="1">
+          <mxGeometry x="-0.0024" width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="585" y="218.7" as="sourcePoint" />
+            <mxPoint x="710" y="218.7" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8jzZQ3zvmZgy1zhVMcF2-3" value="HTTP&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;DEL&lt;/span&gt;" style="endArrow=classic;startArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;startFill=0;verticalAlign=top;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="360" y="250" as="sourcePoint" />
+            <mxPoint x="497.5" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="8jzZQ3zvmZgy1zhVMcF2-4" value="SQL DELETE" style="endArrow=classic;startArrow=none;html=1;rounded=0;labelBackgroundColor=none;fontColor=#000000;strokeColor=#000000;startFill=0;verticalAlign=top;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="585" y="250" as="sourcePoint" />
+            <mxPoint x="710" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

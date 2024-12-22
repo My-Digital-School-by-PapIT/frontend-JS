@@ -117,7 +117,7 @@
         \includegraphics[width=8cm]{image/web-static}
     \end{frame}
 
-    \begin{frame}[fragile]{Les ressources du Web}{Analyse des composants, exercice \execcounterdispinc{}}
+    \begin{frame}[fragile]{Développement Web Statique}{Exercice \execcounterdispinc{}}
         \begin{itemize}
             \item Installer Python 3.
             \item Installer un IDE de développement Web comme WebStorm.
@@ -127,11 +127,88 @@ python3 -m http.server
             \end{lstlisting}
             \item Naviguer à l'adresse indiquée.
             \item Modifier le fichier \lstinline{index.html} pour ajouter un lien vers une page HTML développée par vos soins avec votre nom et une photo de vous.
-            \item Rafraichir la page et vérifier que la modification est fonctionnelle.
+            \item Rafraîchir la page et vérifier que la modification est fonctionnelle.
         \end{itemize}
     \end{frame}
 
+
     \section{Le web dynamique}\label{sec:Dynamic}
+    \begin{frame}{Développement Web Dynamique}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Quelles seraient les moyens d'avoir des pages web dynamiques~?
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=5cm]{image/question-mark}
+    \end{frame}
+
+    \begin{frame}{Développement Web Dynamique}{Backend}
+        Un serveur qui fait tourner un algorithme qui sert des données qui évoluent (dans la base de données), ou de l'extérieur (API).
+
+        Plusieurs requêtes sont nécessaires, de différents types~:
+        \begin{itemize}
+            \item Des GET comme auparavant pour retourner des données.
+            \item Des POST pour envoyer des données au serveur.
+            \item Des DEL pour supprimer des données de la base de données du serveur.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=7cm]{image/web-dynamic-backend}
+    \end{frame}
+
+    \begin{frame}{Frontend}
+        \begin{small}
+            Il est également possible de modifier une page web sans recharger la page entière, en utilisant JavaScript.
+
+            Le JavaScript est un des langages qui peuvent être interprétés par le navigateur.
+
+            Ces langages sont~:
+            \begin{itemize}
+                \item \textbf{HTML}, un langage de balisage, à l'image du XML, c'est le document principal de la page.
+                Il peut contenir de la mise en forme, des données à afficher, \textit{etc}.
+                \item \textbf{CSS}, un langage de style, qui permet de définir la mise en forme de la page.
+                C'est une manière \textbf{modulaire} de définir le style de tout un site web.
+                \item \textbf{JavaScript}, un langage de programmation qui permet de modifier le contenu de la page sans recharger la page.
+                Il peut modifier~:
+                \begin{itemize}
+                    \item Le contenu de la page, ses données (DOM API\footnotemark{}).
+                    \item Le style de la page, la mise en forme (DOM API\cref{DOM}).
+                    \item Intéragir avec n'importe quel serveur.
+                \end{itemize}
+            \end{itemize}
+        \end{small}
+        \footnotetext{\label{DOM}DOM (Document Object Model), \url{https://developer.mozilla.org/fr/docs/Glossary/DOM}}
+    \end{frame}
+
+
+    \section{Généralité sur le JavaScript en Frontend}\label{sec:js-basic}
+
+    \begin{frame}{Où se trouve le JavaScript ?}
+        Deux solutions, ils se trouvent~:
+        \begin{itemize}
+            \item Dans le fichier HTML, entre les balises \lstinline{<script>...</script>}.
+            \item Dans un fichier séparé, avec l'attribut \lstinline{src} de la balise \lstinline{<script>} qui indique le chemin de ce fichier.
+            Comme le fichier de style, cette méthode est plus modulaire, car ce fichier peut être partagé entre plusieurs pages.
+        \end{itemize}
+        \bigbreak
+        \begin{dangercolorbox}
+            En programmation, être modulaire est une importante qualité. Si on réutilise, on est écrit moins.
+            Ici, dans un seul fichier.
+            Si on écrit moins, on écrit moins de bug~!
+        \end{dangercolorbox}
+    \end{frame}
+
+    \begin{frame}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Trouver le script javascript du fichier \lstinline{index.html}.
+            \item Créer un fichier \lstinline{script.js} dans le même répertoire que \lstinline{index.html}.
+            \item Copier le contenu du script dans ce fichier.
+            \item Adapter le fichier \lstinline{index.html} pour inclure ce fichier en utilisant l'attribut \lstinline{src} et supprimant le contenu de la balise qui devient inutile.
+            \item Simplifier la balise \lstinline{<script>} en conséquence.
+            \item Rafraîchir la page et vérifier que la modification est fonctionnelle.
+        \end{itemize}
+    \end{frame}
+
 
     \section{Licence CC}\label{sec:licence}
 

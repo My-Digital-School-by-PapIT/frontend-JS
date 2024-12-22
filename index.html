@@ -7,4 +7,30 @@
 <p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this
     <strong>p</strong> tag and its contents.</p>
 </body>
+<script>
+    /***************************************************************************
+     * This function returns the current date and time in the following format:
+     * YYYY-MM-DD HH:MM:SS
+     *
+     * @returns {string} The formatted date and time
+     * */
+    function getFormattedDate() {
+        const date = new Date();
+        const str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        return str;
+    }
+
+    // Create a <p> tag
+    const p = document.createElement("p");
+    const timeParagraphId = "time-paragraph";
+    p.innerText = `The time is ${getFormattedDate()} !`;
+    p.id = timeParagraphId;
+    // Add a <p> at the end of the body
+    document.body.appendChild(p);
+    // Every 1 second, update the time in the <p> tag
+    setInterval(() => {
+        var p = document.getElementById(timeParagraphId);
+        p.innerText = `The time is ${getFormattedDate()} !`;
+    }, 1000);
+</script>
 </html>
