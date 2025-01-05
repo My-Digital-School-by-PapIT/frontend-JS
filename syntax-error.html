@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Erreur de syntaxe JavaScript</title>
+</head>
+<body>
+<p>
+    Ouvrez la console de votre navigateur pour voir l'erreur de syntaxe JavaScript avec et naviguer avec l'onglet F12
+    pour trouver l'erreur JavaScript.
+</p>
+</body>
+<script>
+    // Onload ensure that the script runs after the page has loaded, we can
+    // manipulate all the elements in the DOM.
+    window.onload = function () {
+        const loadPageTime = new Date();
+        // Every 1 second, update the time on page
+        setInterval(() => {
+            // t0 - t = time spent on page
+            let onPageTime = new Date() - laodPageTime;
+            // Log dans la console le temps passé sur la page en millisecondes
+            console.log(
+                `Temps sur la page en millisecondes: ${new Intl.NumberFormat("fr-FR").format(onPageTime)}`
+            );
+        }, 1000);
+    };
+</script>
+</html>

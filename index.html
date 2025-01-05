@@ -22,15 +22,18 @@
 
     // Create a <p> tag
     const p = document.createElement("p");
-    const timeParagraphId = "time-paragraph";
     p.innerText = `The time is ${getFormattedDate()} !`;
-    p.id = timeParagraphId;
-    // Add a <p> at the end of the body
-    document.body.appendChild(p);
-    // Every 1 second, update the time in the <p> tag
-    setInterval(() => {
-        var p = document.getElementById(timeParagraphId);
-        p.innerText = `The time is ${getFormattedDate()} !`;
-    }, 1000);
+
+    // Onload ensure that the script runs after the page has loaded, we can
+    // manipulate all the elements in the DOM.
+    window.onload = function () {
+
+        // Add a <p> at the end of the body
+        document.body.appendChild(p);
+        // Every 1 second, update the time in the <p> tag
+        setInterval(() => {
+            p.innerText = `The time is ${getFormattedDate()} !`;
+        }, 1000);
+    };
 </script>
 </html>
