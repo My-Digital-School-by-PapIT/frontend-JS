@@ -244,7 +244,7 @@ python3 -m http.server
 
     \begin{frame}{Exercice \execcounterdispinc{}}
         \begin{itemize}
-            \item Trouver le script javascript du fichier \lstinline{index.html}.
+            \item Trouver le Script JavaScript du fichier \lstinline{index.html}.
             \item Créer un fichier
             \lstinline{script.js} dans le même répertoire que \lstinline{index.html}.
             \item Copier le contenu du script dans ce fichier.
@@ -1877,6 +1877,442 @@ for (let i = 0; i < arr.length; i++) {
     \end{frame}
 
     \subsection{Les objets}\label{subsec:object}
+
+
+    \begin{frame}[fragile]{JSON\footnote{JSON, \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON}}}
+        \begin{footnotesize}
+            JavaScript Object Notation, est une serialisation (mise en forme) des données au format clé: valeur délimité par des accolades \lstinline!{}!.
+
+            Les clés et valeurs peuvent être de n'importe quel type, même si la clé est le plus souvent une chaîne de caractères, pour être plus compréhensible.
+            \bigbreak
+            On peut le voir comme un objet abstrait qui ne fait que porter des données, il n'y a pas de méthodes ou de fonctions ayant une action sur autre chose que lui-même.
+            On peut l'utiliser pour stocker des données comme une mini base de données, les envoyer sur un réseau, les sauvegarder dans un fichier.
+        \end{footnotesize}
+        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+let adrien = {
+    "nom": "Adrien",
+    "JavaScript": {
+        "notes": [12, 15, 18],
+        "Appréciation": "Excellent"
+    },
+    "CSS" :{
+        "notes": [10, 14, 16],
+        "Appréciation": "Bon"
+    }
+};
+console.log(JSON.stringify(adrien)); // La chaine de caractère correspondante
+console.log("Les notes de JavaScript est sont : " + adrien.JavaScript.notes);
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{JSON}
+        On peut également accéder à valuer avec la syntaxe \lstinline{adrien["Javascript"]["notes"]}~.
+        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+console.log("Est-ce identique : " + adrien.JavaScript.notes == adrien["Javascript"]["notes"]);
+        \end{lstlisting}
+        \bigbreak
+        L'objet JSON \lstinline{adrien} ne porte pas vraiment de méthode intéressante~:
+        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+> adrien.
+adrien.__proto__             adrien.constructor
+adrien.hasOwnProperty        adrien.isPrototypeOf
+adrien.propertyIsEnumerable  adrien.toLocaleString
+adrien.toString              adrien.valueOf
+
+adrien.CSS                   adrien.JavaScript
+adrien.age                   adrien.nom
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{JSON}{Modifier un objet JSON}
+        \begin{footnotesize}
+            Pour ajouter une clé: valeur à un objet existant~:
+            \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+> adrien.age = 25; // adrien["age"] = 25;
+25
+> adrien
+{
+  nom: 'Adrien',
+  JavaScript: { notes: [ 12, 15, 18 ], 'Appréciation': 'Excellent' },
+  CSS: { notes: [ 10, 14, 16 ], 'Appréciation': 'Bon' },
+  age: 25
+}
+            \end{lstlisting}
+            Il est possible de supprimer une clé: valeur avec l'instruction \lstinline{delete}~:
+            \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+> delete adrien.age; // delete adrien["age"]
+true
+> adrien
+{
+  nom: 'Adrien',
+  JavaScript: { notes: [ 12, 15, 18 ], 'Appréciation': 'Excellent' },
+  CSS: { notes: [ 10, 14, 16 ], 'Appréciation': 'Bon' }
+}
+            \end{lstlisting}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{JSON}{Modifier un objet JSON}
+        Assigner une nouvelle valeur à une existante~:
+        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+> adrien.age = 25; // adrien["age"] = 26;
+26
+> adrien
+{
+  nom: 'Adrien',
+  JavaScript: { notes: [ 12, 15, 18 ], 'Appréciation': 'Excellent' },
+  CSS: { notes: [ 10, 14, 16 ], 'Appréciation': 'Bon' },
+  age: 26
+}
+        \end{lstlisting}
+        \begin{center}
+            \includegraphics[width=3.2cm]{image/json-changing}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets}{JSON \lstinline{parse} et \lstinline{stringify}}
+        \begin{footnotesize}
+            L'objet \lstinline{JSON} porte deux méthodes utiles pour transformer une chaine de caractère en JSON et inversement~:
+            \begin{itemize}
+                \item \lstinline{parse}~: Transforme une chaine de caractère en JSON~.
+                Utilise pour stocker ou transférer un JSON.
+                \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+> JSON.parse('{"nom":"Adrien","age":25,"JavaScript":{"notes":[12,15,18],"Appréciation":"Excellent"},"CSS":{"notes":[10,14,16],"Appréciation":"Bon"}}')
+{
+  nom: 'Adrien',
+  age: 25,
+  JavaScript: { notes: [ 12, 15, 18 ], 'Appréciation': 'Excellent' },
+  CSS: { notes: [ 10, 14, 16 ], 'Appréciation': 'Bon' }
+}
+                \end{lstlisting}
+                \item \lstinline{stringify}~: Transforme un JSON en chaine de caractère.
+                Utile pour utiliser en JavaScript un JSON stocker dans un fichier ou réceptionné sur le réseau.
+                \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+> JSON.stringify(adrien)
+'{"nom":"Adrien","age":25,"JavaScript":{"notes":[12,15,18],"Appréciation":"Excellent"},"CSS":{"notes":[10,14,16],"Appréciation":"Bon"}}'
+                \end{lstlisting}
+            \end{itemize}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}{JSON}{Exercice \execcounterdispinc{}}
+        À l'aide de l'objet JSON \lstinline{adrien} et de la fonction \lstinline{mean} des slides précédents~:
+        \begin{itemize}
+            \item Calculer la moyenne des notes de JavaScript et de CSS~.
+            \item Ajouter ces moyennes à l'objet \lstinline{adrien}~.
+            \item Supprimer les notes de JavaScript et de CSS de l'objet \lstinline{adrien}~.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=3cm]{image/intelligence}
+    \end{frame}
+
+    \begin{frame}{Créer ses classes ou types d'objet}
+        \begin{footnotesize}
+            JavaScript est un langage orienté objet, comme tout ceux de cette catégorie, il permet de créer des classes.
+            \bigbreak
+            \begin{columns}
+                \column{0.75\textwidth}
+                \begin{itemize}
+                    \item Une classe permet de créer des objets en les instanciant ou non avec des paramètres, passés à ceux qu'on appelle le \textquote{constructeur}.
+                    \item Tout comme le JSON c'est une représentation abstraite d'un objet réel.
+                    \item Il peut lui aussi porter des données
+                    \item Mais il peut en plus porter des méthodes, des fonctions qui agissent sur les données ou sur le programme.
+                    \item Un objet peut \textquote{hériter} d'un autre pour avoir les mêmes propriétés et donc réduire les développements.
+                    \item Une classe \textquote{encapsule} ce dont elle est responsable, ce qui est reconnu pour aider à la lecture du code.
+                \end{itemize}
+                \column{0.25\textwidth}
+                \centering
+                \includegraphics[width=3cm]{image/you-are-classy}
+            \end{columns}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
+        \begin{footnotesize}
+            Le constructeur se déclare dans la classe avec le mot-clé \lstinline{constructor}.
+            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class Car {
+
+    static getFactoryWheelNumber() {
+        return 4;
+    }
+
+    // Le bloc de code ci-dessous est le constrcuteur
+    constructor(brand) {
+        this.brand = brand;
+        this.wheel = Car.getFactoryWheelNumber();
+    }
+
+    getCurrentWheelNumber() {
+        return this.wheel;
+    }
+}
+let myCar = new Car("Renault")
+console.log(myCar.brand); // Renault
+            \end{lstlisting}
+            Le constructeur a un paramètre, la marque de la voiture.
+            Le constructeur initialise la marque et le nombre de roues dans les propriétés préfixées par \lstinline{this}, propriétés propres à cette instance de la classe uniquement.
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
+        \begin{footnotesize}
+            Deux instances d'une même classe ont bien des propriétés indépendantes.
+            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class Car {
+
+    static getFactoryWheelNumber() {
+        return 4;
+    }
+
+    // Le bloc de code ci-dessous est le constrcuteur
+    constructor(brand) {
+        this.brand = brand;
+        this.wheel = Car.getFactoryWheelNumber();
+    }
+
+    getCurrentWheelNumber() {
+        return this.wheel;
+    }
+}
+function carAccident(car) {
+    car.wheel = 3;
+}
+let renault = new Car("Renault")
+let mercedes = new Car("Mercedes")
+carAccident(renault);
+console.log("La Renautl a " + renault.wheel + " roues"); // 3 roues
+console.log("La Mercedes a " + mercedes.wheel + " roues"); // 4 roues
+            \end{lstlisting}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
+        Donne en sortie~:
+        \begin{lstlisting}[language=Bash,title={\scriptsize{Commande dans un Shell/Console/PowerShell}}]
+La Renautl a 3 roues
+La Mercedes a 4 roues
+        \end{lstlisting}
+        Expliquer pourquoi~?
+        \bigbreak
+        \begin{center}
+            \includegraphics[width=3cm]{image/intelligence}
+        \end{center}
+    \end{frame}
+
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
+        \begin{footnotesize}
+            Un constructeur n'a pas nécessairement d'argument.
+            Si les propriétés de l'instance peuvent-être générées par le navigateur ou un appel d'API, quelque chose d'extérieur au programme et donc ne sont pas à passer en paramètre.
+        \end{footnotesize}
+        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class BrowserTracking {
+    static geolocationSuccess(resolve, position) { resolve(position); }
+    static geolocationError(reject, err) { reject(null); }
+    static getPosition() {
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                BrowserTracking.geolocationSuccess.bind(null, resolve),
+                BrowserTracking.geolocationError.bind(null, reject)
+            );
+        });
+    }
+    constructor() {
+        this.agent = window.navigator.userAgent;
+        this.screen = window.screen;
+        BrowserTracking.getPosition().then(position => {
+            this.position = position;
+        }).catch(err => {
+            this.position = err;
+        });
+    }
+}
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Créer ses classes ou types d'objet}{Le constructeur}
+        \centering
+        \includegraphics[width=11cm]{image/browser-tracker}
+    \end{frame}
+
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Les méthodes}
+        \begin{footnotesize}
+            Une méthode est une fonction qui agit grâce/sur les propriétés de l'objet.
+            Exemple ici de la méthode \lstinline{isPrime}~:
+            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class MDSNumber {
+    constructor (integer) {
+        this.integer = integer
+    }
+    isPrime() {
+        if (this.integer < 2) {
+            return false;
+        }
+        for (let i = 2; i <= Math.sqrt(this.integer); i++) {
+            if (this.integer % i === 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+            \end{lstlisting}
+            \lstinline{isPrime} utilise la propriété \lstinline{integer} de l'instance de classe pour savoir si c'est un nombre premier.
+            C'est donc bien une méthode.
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Les fonctions}
+        \begin{footnotesize}
+            Une fonction dîte statique, préfixée par \lstinline{static} en JS~.
+            Exemple ici des fonctions \lstinline{mean} et \lstinline{factorial} qui n'utilisent pas de propriété de l'instance (même pas de constructeur)~:
+            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class MathUtilities {
+    // Static method to calculate the square of a number
+    static mean(numbers) {
+        let sum = 0;
+        for (let i = 0; i < numbers.length; i++) {
+            sum += numbers[i];
+        }
+        return sum / numbers.length;
+    }
+    static factorial(number) {
+        if (number === 0) {
+            return 1;
+        }
+        return number * MathUtilities.factorial(number - 1)
+    }
+}
+console.log(MathUtilities.mean([1,2,3,4])); // Output 2.5
+console.log(MathUtilities.factorial(5)); // Output 120
+            \end{lstlisting}
+            Cette classe, à l'image de la classe \lstinline{Math}, ne fait que encapsuler des fonctions mathématiques.
+            Une classe peut évidement avoir des méthodes et des fonctions.
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Créer ses classes ou types d'objet}{L'héritage}
+        \begin{footnotesize}
+            Si un objet \textbf{est} également un autre objet (conceptuellement), il doit pouvoir hériter de ce dernier.
+            Ici avec une corde d'escalade qui est aussi une corde et en hérite donc~:
+            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+class Corde{
+    constructor(longueur){
+        this.longueur = longueur
+    }
+    coupe(longueur){
+        this.longueur -= longueur
+    }
+}
+// extends est l'instruction qui soécifie la classe héritée
+class CordeEscalade extends Corde {
+    constructor(longueur){
+        super(longueur) // super est l'instruction qui instancie la classe mère
+    }
+    longueurMax(poids){
+        return this.longueur + (this.longueur * poids / 1000)
+    }
+}
+let cordeEscalade = new CordeEscalade(100)
+console.log(cordeEscalade.coupe(10)) // A les propriétés d'une corde
+console.log(cordeEscalade.longueurMax(10)) // Et également d'une corde d'escalade
+            \end{lstlisting}
+            Par opposition un objet \textbf{a} des propriétés, comme ici la longueur, on parle de \textit{composition} de l'objet.
+        \end{footnotesize}
+    \end{frame}
+
+
+    \begin{frame}{Créer ses classes ou types d'objet}{Exercice \execcounterdispinc{}}
+        Développer une classe \lstinline{Chatter} qui permet de stocker des messages et de les afficher à l'avenir.
+        \begin{itemize}
+            \item La classe doit avoir un constructeur qui prend 2 paramètres, une chaîne de caractère \lstinline{nickname} et un entier nommé \lstinline{id}.
+            Il initialise un tableau vide de messages.
+            \item Une méthode qui retourne tous les messages.
+            \item Une méthode qui retourne les 5 derniers messages avec \lstinline{slice}.
+            \item Une méthode qui permet l'ajout d'un message.
+            \item Une méthode qui ramène toutes les informations.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=3cm]{image/intelligence}
+    \end{frame}
+
+
+    \section{BOM (Browser Object Model)}\label{sec:bom}
+
+    \begin{frame}{Introduction au Browser Object Model (BOM) et à l’objet Window\footnote{\label{giraud-js}Cours complet JavaScript, Pierre Giraud, \url{https://www.pierre-giraud.com/javascript-apprendre-coder-cours/browser-object-model-window/}}}
+        \begin{footnotesize}
+            Le BOM est une sorte de \textquote{super API} elle-même composée de plusieurs API dont certaines sont elles-mêmes composées de plusieurs API et \textit{etc}.
+            \bigbreak
+            À la base du BOM, nous avons l’interface \lstinline{Window} qui représente une fenêtre de navigateur contenant une page ou un document.
+            \bigbreak
+            Dans un navigateur utilisant des onglets, comme Firefox, chaque onglet contient son propre objet \lstinline{Window}.
+            \bigbreak
+            Cet objet \lstinline{Window} est un objet dit \textquote{implicite}~: Pas besoin de le mentionner de manière explicite pour utiliser les méthodes (ou fonctions globales) et propriétés (ou variables globales) lui appartenant.
+            \bigbreak
+            Le BOM est composé de différentes interfaces qu’on va pouvoir utiliser via des objets.
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM\cref{giraud-js}}
+        Les objets suivants appartiennent au BOM et sont tous des enfants de \lstinline{Window}~:
+        \begin{itemize}
+            \item L’objet \lstinline{Navigator} qui représente l’état et l’identité du navigateur et qu’on va utiliser avec l’API Geolocation.
+            L'objet instancié est \lstinline{navigator} ou \lstinline{window.navigator}.
+            \item L’objet \lstinline{History} qui permet de manipuler l’historique de navigation du navigateur.
+            L'objet instancié est \lstinline{history} ou \lstinline{window.history}.
+            \item L’objet \lstinline{Location} qui fournit des informations relatives à l’URL de la page courante.
+            L'objet instancié est \lstinline{location} ou \lstinline{window.location}.
+            \item L’objet \lstinline{Screen} qui nous permet d’examiner les propriétés de l’écran qui affiche la fenêtre courante.
+            L'objet instancié est \lstinline{screen} ou \lstinline{window.screen}.
+            \item L’objet \lstinline{Document} et le DOM dans son ensemble que nous étudierons en détail dans la suite.
+            C'est ce qui permet de modifier les balises HTML donc le rendu visuel du frontend.
+            L'objet instancié est \lstinline{document} ou \lstinline{window.document}.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM}{Les objets de \lstinline{window}}
+        \centering
+        \includegraphics[width=9cm]{image/browser-window-objects}
+        \flushleft
+        C'est pour cela qu'on peut dire que \lstinline{window} est implicite, il n'est pas écrit pour gagner en temps de rédaction et lisibilité du code.
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM}{Les objets de \lstinline{window}}
+        \centering
+        \includegraphics[width=10cm]{image/bom-n-dom}
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM}{L'objet \lstinline{navigator}}
+        L'objet \lstinline{navigator} porte de nombreuses données et méthodes sur la machine sur laquelle tourne le navigateur, le navigateur lui-même, la géolocalisation supposée, \textit{etc}.
+        \bigbreak
+        Exercice \execcounterdispinc{}~:
+        \begin{itemize}
+            \item Découvrir l'objet \lstinline{navigator} dans la console du navigateur.
+            \item Découvrir le fonctionnement de la méthode \lstinline{getCurrentPosition} (\url{https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition}) et la faire fonctionner dans la console du navigateur.
+            \item En s'inspirant de la vue précédemment, ajouter la latitude et la longitude à l'objet \lstinline{Chatter} de l'exercice précédent.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM}{L'objet \lstinline{location}}
+        L'objet \lstinline{location} porte toutes les données relatives à l'URL de page.
+        \bigbreak
+        Exercice \execcounterdispinc{}~:
+        \begin{columns}
+            \column{0.6\textwidth}
+            \begin{itemize}
+                \item Découvrir l'objet \lstinline{location} dans la console du navigateur.
+                \item Ajouter au constructeur de la classe \lstinline{Chatter} de l'exercice précédent, une propriété \lstinline{origine} qui est le nom du serveur, soit le \lstinline{hostname}.
+                \item Comment utiliser \lstinline{location} pour lié une adresse à une donnée dans une base de donnée~?
+            \end{itemize}
+            \column{0.4\textwidth}
+            \centering
+            \includegraphics[width=5cm]{image/browser-location}
+        \end{columns}
+    \end{frame}
 
 
     \section{Licence CC}\label{sec:licence}
