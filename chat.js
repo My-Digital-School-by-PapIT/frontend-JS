@@ -30,6 +30,8 @@ class Chatter {
         this.hostname = location.hostname;
         // Use screen object to define if the user is on a mobile device or not
         this.isMobile = screen.orientation.type.includes("portrait");
+        // Set the hash as the id
+        location.hash = location.hash = `#${this.id}`;
     }
 
     // Méthode qui retourne tous les messages
@@ -75,6 +77,7 @@ class Message {
     }
 
 }
+
 /*******************************************************************************
  Update all the UI, I.e., DOM
  @param {Chatter} chatter - The Chatter instance containing messages
@@ -85,6 +88,7 @@ function updateWebUI(chatter, messageInputElement) {
     updateInfoCard(chatter);
     updateMessageList(chatter, messageInputElement);
 }
+
 /*******************************************************************************
  Add information of the Chatter instance to the dedicated card.
  @param {Chatter} chatter - The Chatter instance containing messages
@@ -145,17 +149,17 @@ function updateInfoCard(chatter) {
 }
 
 /*******************************************************************************
-Message input form is disabled by default.
-The parent's element's id is messages-card-body
-Each message should be displayed in a card with the following structure:
-<div class="card">
-    <div class="card-header">
-        <h4>${Chatter.name}, le ${Chatter.messages[i].date}</h4>
-    </div>
-    <div>
-        <p>${Chatter.messages[i].content}</p>
-    </div>
-</div>
+ Message input form is disabled by default.
+ The parent's element's id is messages-card-body
+ Each message should be displayed in a card with the following structure:
+ <div class="card">
+ <div class="card-header">
+ <h4>${Chatter.name}, le ${Chatter.messages[i].date}</h4>
+ </div>
+ <div>
+ <p>${Chatter.messages[i].content}</p>
+ </div>
+ </div>
  @param {Chatter} chatter - The Chatter instance containing messages
  @param {HTMLInputElement} messageInputElement - The message input to
   disable/enable

@@ -68,6 +68,10 @@ const Message = sequelize.define(
             type: Sequelize.INTEGER,
             allowNull: false
         },
+        userName: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
         date: {
             type: Sequelize.DATE,
             allowNull: false
@@ -173,6 +177,7 @@ app.post('/v1/message', (req, res) => {
             content: req.body.content,
             id: req.body.id,
             userId: req.body.userId,
+            userName: req.body.userName,
             date: req.body.date
         }).then(() => {
                 res.status(200).json(

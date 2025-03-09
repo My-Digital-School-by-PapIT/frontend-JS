@@ -10,7 +10,7 @@ function randomId() {
 
 // Test dataset
 const JOHN_DOE_ID = 1;
-const JOHN_DOE_NAME= "John Doe";
+const JOHN_DOE_NAME = "John Doe";
 
 function initDB() {
     sequelize.sync().then(() => {
@@ -26,12 +26,14 @@ function initDB() {
             id: 1,
             content: 'Hello, world!',
             userId: JOHN_DOE_ID,
+            userName: JOHN_DOE_NAME,
             date: new Date()
         });
         Message.create({
             id: 2,
             content: 'How are you?',
             userId: JOHN_DOE_ID,
+            userName: JOHN_DOE_NAME,
             date: new Date()
         });
     }).catch(
@@ -84,7 +86,8 @@ describe('Chat Server API', () => {
             .send({
                 content: 'Hello, world!',
                 id: randomId(),
-                userId: 1,
+                userId: JOHN_DOE_ID,
+                userName: JOHN_DOE_NAME,
                 date: new Date()
             });
         expect(res.statusCode).toEqual(200);
