@@ -1,0 +1,39 @@
+<!-- An empty page -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSockets</title>
+</head>
+<body>
+<h1>WebSockets</h1>
+<h2>Tout est dans la console&nbsp;!</h2>
+</body>
+
+<script>
+    let socket = new WebSocket("ws://localhost:8080/");
+
+    socket.onopen = function (e) {
+        console.log("[open] Connection established");
+        console.log("Sending to server");
+        socket.send("My name is John");
+    };
+
+    socket.onmessage = function (event) {
+        console.log(`[message] Data received from server: ${event.data}`);
+    };
+
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        } else {
+            // par exemple : processus serveur arrêté ou réseau en panne
+            // event.code est généralement 1006 dans ce cas
+            console.log(`[close] Connection died in event code: ${event.code}`);
+        }
+    };
+
+    socket.onerror = function (error) {
+        console.log(`[error] ${error.message}`);
+    };
+</script>
+</html>

@@ -14,7 +14,7 @@
 \definecolor{silver}{RGB}{236, 240, 241}
 
 \lstdefinelanguage{JavaScript}{
-    keywords={typeof, new, true, false, try, catch, function, return, null, catch, switch, var, const, let, if, in, while, for, do, else, case, break, undefined, default, continue},
+    keywords={typeof, new, true, false, try, catch, function, return, null, async, await, switch, var, const, let, if, in, while, for, do, else, case, break, undefined, default, continue},
     keywordstyle=\color{blue}\bfseries,
     ndkeywords={class, export, boolean, throw, implements, import, this},
     ndkeywordstyle=\color{darkgray}\bfseries,
@@ -161,7 +161,7 @@
             \item Installer Python 3.
             \item Installer un IDE de développement Web comme WebStorm.
             \item Lancer un serveur HTTP avec la commande dans le répertoire du cours~:
-            \begin{lstlisting}[language=Bash,title={\scriptsize{Commande dans un Shell/Console/PowerShell}}]
+            \begin{lstlisting}[language=Bash,title={\tiny{Commande dans un Shell/Console/PowerShell}}]
 python3 -m http.server
             \end{lstlisting}
             \item Naviguer à l'adresse indiquée.
@@ -233,6 +233,7 @@ python3 -m http.server
             \lstinline{src} de la balise \lstinline{<script>} qui indique le chemin de ce
             fichier. Comme le fichier de style, cette méthode est plus modulaire, car ce
             fichier peut être partagé entre plusieurs pages.
+            Ces balises \lstinline{<script>} doivent être placées à la fin du \lstinline{<body>}.
         \end{itemize}
         \bigbreak
         \begin{dangercolorbox}
@@ -260,7 +261,7 @@ python3 -m http.server
         Comprenez-vous l'aspect \textit{modulaire} de cette méthode~?
     \end{frame}
 
-    \subsection{Les bases du débug}\label{sec:debugbasics}
+    \subsection{Les bases du débug}\label{subsec:debugbasics}
     \begin{frame}{Les bases du débug}{Dans le navigateur}
         Le JavaScript est exécuté par le navigateur, il est donc essentiel de pouvoir débugger ce dernier directement dans le navigateur.
         \bigbreak
@@ -529,7 +530,7 @@ python3 -m http.server
     \subsection{Déclarations et types primitifs}\label{subsec:declare-n-types}
 
     \begin{frame}[fragile]{Déclarations et types}{Les types numériques}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 // Ceci est un commentaire et ne sera pas exécuté
 /*
 Ceci est un commentaire multiligne et ne sera pas exécuté
@@ -553,7 +554,7 @@ console.log("Je mesure " + myHeight + " mètre"); console.log("Le type de la var
     \end{frame}
 
     \begin{frame}[fragile]{Déclarations et types}{Les types numériques}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 // Mais peut aussi être déclaré de manière explicite
 var myAge = Number(39); // 39 est un nombre entier (integer en anglais)
 // Console.log est une fonction qui permet d'afficher des messages dans la console
@@ -567,7 +568,7 @@ console.log("Le type de la variable myHeight qui n'a été déclaré (le type) e
     \end{frame}
 
     \begin{frame}[fragile]{Déclarations et types}{Les grands entiers}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 /* Mais pour l'arithmétique des grands nombres, il est préférable d'utiliser BigInt.
 Ils sont à utiliser au-dessus du nombre définit dans Number.MAX_SAFE_INTEGER
 qui peut varier en fonction des machines
@@ -579,7 +580,7 @@ console.log("Le type de la variable myBigNumber qui n'a été déclaré (le type
         \begin{dangercolorbox}
             Mais BigInt ne fonctionne que pour les entiers, pas les réels.
         \end{dangercolorbox}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > var myBigNumber = BigInt(Number.MAX_SAFE_INTEGER) + BigInt(1.666);
 Uncaught:
 RangeError: The number 1.666 cannot be converted to a BigInt because it is not an integer
@@ -590,7 +591,7 @@ Uncaught TypeError: Cannot mix BigInt and other types, use explicit conversions
     \end{frame}
 
     \begin{frame}[fragile]{Déclarations et types}{Les grands entiers}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 /* Mais pour l'arithmétique des grands nombres, il est préférable d'utiliser BigInt.
 Ils sont à utiliser au-dessus du nombre définit dans Number.MAX_SAFE_INTEGER
 qui peut varier en fonction des machines
@@ -602,7 +603,7 @@ console.log("Le type de la variable myBigNumber qui n'a été déclaré (le type
         \begin{dangercolorbox}
             Mais BigInt ne fonctionne que pour les entiers, pas les réels.
         \end{dangercolorbox}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > var myBigNumber = BigInt(Number.MAX_SAFE_INTEGER) + BigInt(1.666);
 Uncaught:
 RangeError: The number 1.666 cannot be converted to a BigInt because it is not an integer
@@ -614,7 +615,7 @@ Uncaught TypeError: Cannot mix BigInt and other types, use explicit conversions
 
     \begin{frame}[fragile]{Déclarations et types}{Les grands entiers}
         On peut aussi déclarer un grand nombre en le suffixant avec un \lstinline{n} pour le forcer à être un BigInt.
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > atomNumber = 9999999999999999999999999999999999999999n
 9999999999999999999999999999999999999999n
 > typeof ato
@@ -627,7 +628,7 @@ Atomics atob atomNumber
 
     \begin{frame}[fragile]{Déclarations et types}{Les nombres speciaux}
         Un nombre particulier existe en JS c'est \textit{Infinity} qui représente l'infini.
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 // Le nombre spécial Infinty
 console.log("Le type de la variable Infinity qui n'a été déclaré (le type) est " + typeof Infinity);
 console.log("Infinity - Infinity = " + Infinity - Infinity);
@@ -637,15 +638,15 @@ console.log("999999999999999999 / Infinity = " + 999999999999999999 / Infinity);
     \end{frame}
 
     \begin{frame}[fragile]{Déclarations et types}{Les chaines de caractères}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 /*
-Déclaration d'une variable de type chaine de caractère (string en anglais),
+Déclaration d'une variable de type chaîne de caractère (string en anglais),
 elle a un scope avec var, un nom myName et le type est toujours inféré par le langage.
 Il se base sur les quotes qui peuvent `, " ou '. En français, on utilise souvent
 les guillemets doubles quotes, car on utilise souvent les apostrophes (simple quote)
 dans les phrases.
 */
-var myName = "Christophe"; // "Christophe" est une chaine de caractère (string en anglais)
+var myName = "Christophe"; // "Christophe" est une chaîne de caractère (string en anglais)
 console.log("Je m'appelle " + myName);
 console.log("Le type de la variable myName qui n'a été déclaré (le type) est " + typeof myName);
         \end{lstlisting}
@@ -681,7 +682,7 @@ console.log("Le type de la variable myName qui n'a été déclaré (le type) est
                 expressions booléennes.
             \end{itemize}
         \end{footnotesize}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > var isAdult = true;
 undefined
 > var isMinor = false;
@@ -698,7 +699,7 @@ Vous êtes un adulte.
 
     \begin{frame}[fragile]{Déclarations et types}{Les booléens}
         Tester le contraire d'un booléan avec \lstinline{!}~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > var isAdult = true;
 undefined
 > var isMinor = false;
@@ -717,7 +718,7 @@ Vous êtes un adulte.
         Le booléen \lstinline{false} est un entier de valeur 0, tout le reste est \lstinline{true}.
         \bigbreak
         On peut le vérifier en explicitant le type avec \lstinline{Boolean}~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > var isAdult = Boolean(0);
 undefined
 > isAdult
@@ -749,7 +750,7 @@ true
             valeurs, je recommande de les traiter comme étant principalement
             interchangeables.
         \end{footnotesize}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > var parkingLot;
 undefined
 > parkingLot
@@ -763,7 +764,7 @@ true
 
     \begin{frame}[fragile]{Déclarations et types}{Déclaration de manière explicite}
         Déclarer le type de manière explicite pour éviter des ambiguïtés~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > var t = String(9)
 undefined
 > t
@@ -791,7 +792,7 @@ undefined
                 condition, fonction, \textit{etc}.
             \end{itemize}
         \end{small}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 undefined
 > function x() {
     ... y = 1; // Lève une exception ReferenceError en mode strict
@@ -809,7 +810,7 @@ Uncaught ReferenceError: z is not defined
     \end{frame}
 
     \begin{frame}[fragile]{Déclarations et types}{Portée d'une variable\cref{label}}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > let x = 1;
 undefined
 > if (x === 1) {
@@ -838,7 +839,7 @@ undefined
             On peut déclarer une constante avec le mot clé \lstinline{const}.
             Par la suite, cette constante n'est accessible qu'en lecture.
             Une nouvelle valeur ne peut lui être affectée, une variable du même nom ne peut être à nouveau déclarée.
-            \begin{lstlisting}[language=Bash,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > const number = 42;
 undefined
 > try {
@@ -865,7 +866,7 @@ undefined
             Il convertit silencieusement de nombreux types de valeurs en d'autres types, pour que les choses fonctionnent comme prévu, c'est la \textit{type coercion}.
             Cela peut être pratique, mais parfois peu logique et donc peut aussi être source d'erreurs.
         \end{footnotesize}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > console.log(8 * null)
 0
 undefined
@@ -1089,14 +1090,14 @@ false
     \begin{frame}[fragile]{Les opérateurs}{Opérateur conditionnel A.K.A. ternaire}
         \begin{small}
             L'opérateur conditionnel est le seul opérateur JavaScript à prendre trois opérandes. Il permet d'affecter une valeur ou en affecter une autre selon une condition donnée. Sa syntaxe est la suivante~:
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 condition ? val1 : val2;
             \end{lstlisting}
             Si la condition est vraie, l'expression sera résolue avec la valeur de \lstinline{val1}.
             Sinon, elle sera résolue avec la valeur de \lstinline{val2}.
             L'opérateur conditionnel peut être utilisé à tout endroit où un opérateur
             standard peut être utilisé. \bigbreak Par exemple~:
-            \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > let age = 19;
 undefined
 > const statut = age >= 18 ? "adulte" : "mineur";
@@ -1115,9 +1116,9 @@ undefined
         \begin{itemize}
             \item Stocker un booléen dans \lstinline{major} si la variable \lstinline{age} est
             supérieur à 18.
-            \item Stocker la chaine de caractère
+            \item Stocker la chaîne de caractère
             \lstinline{pair} dans la variable \lstinline{pairOrImpair} si
-            \lstinline{x} est pair, sinon stocker la chaine de caractère \lstinline{impair}.
+            \lstinline{x} est pair, sinon stocker la chaîne de caractère \lstinline{impair}.
             \item Stocker un booléen dans \lstinline{pairBool} si \lstinline{x} est pair.
         \end{itemize}
         \bigbreak
@@ -1193,7 +1194,7 @@ undefined
         \end{small}
         \bigbreak
         Le code suivant, par exemple, définit une fonction intitulée square~:
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 function square(number){
     return number * number;
 }
@@ -1204,7 +1205,7 @@ function square(number){
         La fonction square prend un seul argument, appelé number.
         La fonction est composée d'une seule instruction qui renvoie l'argument de la fonction (number) multiplié par lui-même.
         L'instruction \href{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/return}{return} spécifie la valeur qui est renvoyée par la fonction.~:
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 return number * number;
         \end{lstlisting}
         \begin{dangercolorbox}
@@ -1212,6 +1213,27 @@ return number * number;
             La valeur est passée à la fonction mais si cette dernière change la valeur du paramètre, cela n'aura pas d'impact au niveau global ou au niveau de ce qui a appelé la fonction.
         \end{dangercolorbox}
         Qu'est-ce que ça veut dire~?
+    \end{frame}
+
+    \begin{frame}[fragile]{Les fonctions}{Déclarations\cref{mozilla-function}}
+        Des valeurs par défaut peuvent être définies pour les arguments de la fonction.
+        Ils sont toujours placés après les arguments qui n'en n'ont pas.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+function multiply(a, b=1) {
+    return a*b;
+}
+        \end{lstlisting}
+        Ici, il n'est pas obligatoire de définir \lstinline{1} car il a une valeur par défaut~:
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
+> function multiply(a, b = 1) {
+...     return a*b;
+... }
+undefined
+> multiply(2) // a est 2, b est 1
+2
+> multiply(2, 2) // a est 2, b est 2
+4
+        \end{lstlisting}
     \end{frame}
 
     \begin{frame}{Les fonctions}{Les caractéristiques et bonnes pratiques}
@@ -1237,7 +1259,7 @@ return number * number;
         Par exemple, pour appeler la fonction carré définie précédemment.
         Par convention on termine l'appel par \lstinline{;}.
         Si la fonction a un \lstinline{return}, la valeur retournée peut être stockée dans une variables~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > function square(nombre) {
 ...     return nombre * nombre;
 ... }
@@ -1255,7 +1277,7 @@ undefined
         Il est possible d'imbriquer une fonction au sein d'une fonction.
         La fonction imbriquée (interne) est privée par rapport à la fonction (externe) qui la contient.
         Cela forme ce qu'on appelle une fermeture (\textit{closure} en anglais).
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > function ajouteCarres(a, b) {
 ... function carre(x) {
 ...         return x * x;
@@ -1287,7 +1309,7 @@ undefined
                 ne peut pas utiliser de variables et d'arguments de la fonction interne.
             \end{itemize}
         \end{tiny}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 function externe(x) {
     function interne(y) {
         return x + y;
@@ -1334,7 +1356,7 @@ undefined
             Les fonctions fléchées ne sont pas adaptées à tous les usages, il faut les réserver aux fonctions pures et simples.
         \end{dangercolorbox}
         La syntaxe est la suivante~:
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 function squareOldStyle(nombre) {
         return nombre * nombre;
     }
@@ -1401,7 +1423,7 @@ const squareArrowStyle = (nombre) => nombre * nombre;
             \item Utilisée pour exécuter du code en fonction d'une condition.
             \item Syntaxe~:
         \end{itemize}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 if (condition) {
     // code à exécuter si la condition est vraie
 } else {
@@ -1414,7 +1436,7 @@ if (condition) {
     \end{frame}
 
     \begin{frame}[fragile]{Exemple if/else}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 let heure = 10;
 if (heure < 12) {
     console.log("Bonjour");
@@ -1429,7 +1451,7 @@ if (heure < 12) {
         \bigbreak
         Mais cette structure est très peu lisible quand il y en a plus de 3.
         Exemple de \lstinline{if/else} imbriqués~:
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 let age = 25;
 let citoyen = true;
 let casierJudiciaire = false;
@@ -1456,7 +1478,7 @@ if (age >= 18) {
         \bigbreak
         Ajouter des parenthèses permet d'indiquer une priorité dans les conditions.
         La condition la plus prioritaire étant celle qui est la entourée du plus grand nombre de parenthèses.
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 let age = 25;
 let citoyen = true;
 let casierJudiciaire = false;
@@ -1476,7 +1498,7 @@ if (age >= 18 && citoyen && !casierJudiciaire) {
             Ou pour remplacer des \lstinline{if/else} imbriqués.
             \item Syntaxe~:
         \end{itemize}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 switch (expression) {
     case valeur1:
     // code à exécuter si expression == valeur1
@@ -1493,7 +1515,7 @@ switch (expression) {
     \end{frame}
 
     \begin{frame}[fragile]{Exemple switch case}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 let jour = 3;
 switch (jour) {
     case 1:
@@ -1541,7 +1563,7 @@ switch (jour) {
             \begin{itemize}
                 \item 1 argument de type \lstinline{Number} qui représente une année.
                 \item La fonction doit renvoyer \lstinline{true} si l'année est bissextile, \lstinline{false} sinon.
-                \item Utiliser un \lstinline{if/else} ou un \lstinline{switch/case}.
+                \item Utiliser un \lstinline{if/else}.
             \end{itemize}
         \end{footnotesize}
         \bigbreak
@@ -1584,7 +1606,7 @@ switch (jour) {
             \item Les arrays peuvent contenir différents types de donnée.
             \item Certains comme les \lstinline{Uint8Array}, \lstinline{Float32Array}, \textit{etc} sont des tableaux typés (pas le temps de les voir dans ce cours).
         \end{itemize}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 let students = ["Alice", "Bob", "Charlie", "David"];
 // Sinon en explicitant le type
 let students = new Array("Alice", "Bob", "Charlie", "David");
@@ -1600,7 +1622,7 @@ let students = new Array("Alice", "Bob", "Charlie", "David");
         Les tableaux sont indexés à partir de zéro.
         Le premier élément d'un tableau a pour indice 0 et la position du dernier élément est donnée par \href{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global\_Objects/Array/length}{length} moins 1.
         Si on utilise un indice en dehors de cet intervalle, le résultat sera \href{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/undefined}{undefined} (sous réserve qu'aucune propriété n'ait été ajoutée au préalable avec cet indice).
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 let arr = ["le premier élément", "le deuxième élément", "le dernier élément"];
 console.log(arr[0]); // affiche "le premier élément"
 console.log(arr[1]); // affiche "le deuxième élément"
@@ -1647,7 +1669,7 @@ console.log(arr[10]); // retourne undefined
 
     \begin{frame}[fragile]{Les collections}{Les méthodes des tableaux}
         Toutes les propriétés et méthodes accessibles~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > arr.
 arr.__proto__             arr.hasOwnProperty        arr.isPrototypeOf         arr.propertyIsEnumerable  arr.valueOf
 
@@ -1661,7 +1683,7 @@ arr.length
 
     \begin{frame}[fragile]{Les collections}{Les méthodes des tableaux}
         Les méthodes de base~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > numbers = new Array(2,3,5,4,8,6)
 [ 2, 3, 5, 4, 8, 6 ]
 > numbers.sort() // Trie
@@ -1688,15 +1710,13 @@ true
         JavaScript est un langage orienté objet mais le succès de la programmation fonctionnelle l'influence également.
 
         Les méthodes classiques de la programmation fonctionnelle \lstinline{map}, \lstinline{filter}, \lstinline{reduce} sont disponibles sur les tableaux~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > numbers = new Array(1, 2, 3, 4, 5);
 [ 1, 2, 3, 4, 5 ]
 > const isEven = x => x % 2 === 0;
 undefined
 > numbers.map(isEven);
 [ false, true, false, true, false ]
-> numbers.reduce(isEven);
-true
 > numbers.filter(isEven);
 [ 2, 4 ]
 > numbers.reduce((x, y) => y * x);
@@ -1711,7 +1731,7 @@ true
             Ils ne sont pas indexés, on ne peut donc pas accéder à un élément par son index, on peut juste boucler dessus.
 
             Exemple de déclaration~:
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 > let distances = new Set([12.3, 2.35, 3.85, 4.74, 4.74]); // La valeur en double va disparaître
 undefined
 > distances;
@@ -1720,7 +1740,7 @@ Set(4) { 12.3, 2.35, 3.85, 4.74 }
             La valeur \lstinline{4.74} n'apparaît qu'une seule fois.
             \bigbreak
             Il faut réfléchir au fonctionnel de l'application pour choisir entre un tableau et un ensemble, savoir si les valeurs sont uniques, si l'index est indispensable.
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 > distances[0];
 undefined
             \end{lstlisting}
@@ -1757,7 +1777,7 @@ undefined
 
     \begin{frame}[fragile]{Les boucles}{La boucle \lstinline{for}}
         La boucle \lstinline{for} est la plus courante, elle permet de parcourir \textbf{tout} un tableau.
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 for (initialisation; condition; incrementation) {
     // code à exécuter
 }
@@ -1769,16 +1789,16 @@ for (initialisation; condition; incrementation) {
             Si cette expression est vraie, l'instruction est exécutée.
             Si l'expression est fausse, la boucle est terminée.
             \item \lstinline{incrementation}~: Une expression est évaluée à la fin de chaque itération.
-            Typiquement utilisé pour incrémenter ou décrémenter un compteur.
+            Typiquement utilisée pour incrémenter ou décrémenter un compteur.
         \end{itemize}
     \end{frame}
 
     \begin{frame}[fragile]{Les boucles}{La boucle \lstinline{for}}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > function mean(arr) {
 ...     let sum = 0;
 ...     for (let i = 0; i < arr.length; i++) {
-...         sum += arr[0];
+...         sum += arr[i];
 ...     }
 ...     return sum / arr.length
 ... }
@@ -1795,14 +1815,14 @@ undefined
     \end{frame}
 
     \begin{frame}[fragile]{Les boucles}{la boucle \lstinline{forEach}}
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > let runnerClock = new Set([1.23, 1.24, 1.35, 1.40]);
 undefined
 > function convertMinutesToSeconds(timeInMinute) {
 ...     let secondSet = new Set();
 ...     timeInMinute.forEach(
 ...         time => {
-...             secondSet.add(time % 1 / 100 * 60 + ~~time * 60)
+...             secondSet.add(time % 1 * 60 + ~~time * 60)
 ...         }
 ...     )
 ...     return secondSet
@@ -1817,7 +1837,7 @@ Set(4) { 60.138, 60.144, 60.21, 60.24 }
 
     \begin{frame}[fragile]{Les boucles}{La boucle \lstinline{while}}
         La boucle \lstinline{while} est utilisée pour exécuter un bloc de code tant qu'une condition est vraie.
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 while (condition) {
     // code à exécuter
 }
@@ -1835,7 +1855,7 @@ while (condition) {
             \begin{itemize}
                 \item \lstinline{break}~: Permet de sortir de la boucle.
                 Elle est utile en cas de condition particulière.
-                \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 for (let i = 0; i < arr.length; i++) {
     if (arr[i] === 5) {
@@ -1846,7 +1866,7 @@ for (let i = 0; i < arr.length; i++) {
                 \end{lstlisting}
                 \item \lstinline{continue}~: Permet de passer à l'itération suivante.
                 Cela représente un gain de performance en évitant d'exécuter du code inutile.
-                \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 for (let i = 0; i < arr.length; i++) {
     if (arr[i] % 2 === 0) {
@@ -1861,12 +1881,12 @@ for (let i = 0; i < arr.length; i++) {
     \end{frame}
 
     \begin{frame}{Les boucles}{Exercice \execcounterdispinc{}}
-        Développer une fonction qui vérifie si une chaine de caractère est un palindrome (qui peut se lire indifféremment de gauche à droite ou de droite à gauche).
+        Développer une fonction qui vérifie si une chaîne de caractère est un palindrome (qui peut se lire indifféremment de gauche à droite ou de droite à gauche).
         Les éxigences sont~:
         \begin{itemize}
             \item La fonction doit s'appeler \lstinline{isPalindrome}.
             \item La fonction doit être pure.
-            \item Elle retourne \lstinline{true} si la chaine est un palindrome, \lstinline{false} sinon.
+            \item Elle retourne \lstinline{true} si la chaîne est un palindrome, \lstinline{false} sinon.
             \item La fonction doit être insensible à la casse.
             Pour cela, il faut utiliser les méthodes \lstinline{toLowerCase} ou \lstinline{toUpperCase} des chaînes de caractères.
             \item Doit contenir une boucle \lstinline{for}.
@@ -1876,8 +1896,42 @@ for (let i = 0; i < arr.length; i++) {
         \includegraphics[width=3cm]{image/intelligence}
     \end{frame}
 
-    \subsection{Les objets}\label{subsec:object}
+    \subsection{Les exceptions}\label{subsec:exceptions}
+    \begin{frame}[fragile]{Les exceptions et la structure try...catch\footnote{\label{mozilla-try-catch}try...catch, \url{https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/try...catch}}}
+        \begin{itemize}
+            \item L'instruction \texttt{try...catch} permet de gérer les exceptions levées, \textit{i.e.}, les plantages, en JavaScript.
+            \item Elle regroupe des instructions à exécuter et définit une réponse si une exception est levée.
+        \end{itemize}
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+try {
+    // Instructions à exécuter
+} catch (e) {
+    // Instructions en cas d'exception
+} finally { // Optionnel
+    // Instructions à exécuter après le try/catch
+}
+        \end{lstlisting}
+    \end{frame}
 
+    \begin{frame}[fragile]{Exemple\cref{mozilla-try-catch}}
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+try {
+    nonExistentFunction();
+} catch (error) {
+    console.error(error);
+} finally {
+    console.log('Exécution terminée');
+}
+        \end{lstlisting}
+        \begin{itemize}
+            \item Le bloc \texttt{try} contient le code susceptible de lever une exception.
+            \item Le bloc \texttt{catch} gère l'exception si elle est levée.
+            On peut tester le type d'exception avec \lstinline{instanceof} dans ce bloc pour avoir un comportement qui dépend de l'exception levée.
+            \item Le bloc \texttt{finally} est optionnel, il s'exécute toujours, qu'il y ait eu une exception ou non.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Les objets}\label{subsec:object}
 
     \begin{frame}[fragile]{JSON\footnote{JSON, \url{https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON}}}
         \begin{footnotesize}
@@ -1888,7 +1942,7 @@ for (let i = 0; i < arr.length; i++) {
             On peut le voir comme un objet abstrait qui ne fait que porter des données, il n'y a pas de méthodes ou de fonctions ayant une action sur autre chose que lui-même.
             On peut l'utiliser pour stocker des données comme une mini base de données, les envoyer sur un réseau, les sauvegarder dans un fichier.
         \end{footnotesize}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 let adrien = {
     "nom": "Adrien",
     "JavaScript": {
@@ -1900,19 +1954,19 @@ let adrien = {
         "Appréciation": "Bon"
     }
 };
-console.log(JSON.stringify(adrien)); // La chaine de caractère correspondante
+console.log(JSON.stringify(adrien)); // La chaîne de caractère correspondante
 console.log("Les notes de JavaScript est sont : " + adrien.JavaScript.notes);
         \end{lstlisting}
     \end{frame}
 
     \begin{frame}[fragile]{JSON}
         On peut également accéder à valuer avec la syntaxe \lstinline{adrien["Javascript"]["notes"]}~.
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}}]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 console.log("Est-ce identique : " + adrien.JavaScript.notes == adrien["Javascript"]["notes"]);
         \end{lstlisting}
         \bigbreak
         L'objet JSON \lstinline{adrien} ne porte pas vraiment de méthode intéressante~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > adrien.
 adrien.__proto__             adrien.constructor
 adrien.hasOwnProperty        adrien.isPrototypeOf
@@ -1927,7 +1981,7 @@ adrien.age                   adrien.nom
     \begin{frame}[fragile]{JSON}{Modifier un objet JSON}
         \begin{footnotesize}
             Pour ajouter une clé: valeur à un objet existant~:
-            \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > adrien.age = 25; // adrien["age"] = 25;
 25
 > adrien
@@ -1939,7 +1993,7 @@ adrien.age                   adrien.nom
 }
             \end{lstlisting}
             Il est possible de supprimer une clé: valeur avec l'instruction \lstinline{delete}~:
-            \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > delete adrien.age; // delete adrien["age"]
 true
 > adrien
@@ -1954,7 +2008,7 @@ true
 
     \begin{frame}[fragile]{JSON}{Modifier un objet JSON}
         Assigner une nouvelle valeur à une existante~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Node.js}}]
 > adrien.age = 25; // adrien["age"] = 26;
 26
 > adrien
@@ -1972,11 +2026,11 @@ true
 
     \begin{frame}[fragile]{Les objets}{JSON \lstinline{parse} et \lstinline{stringify}}
         \begin{footnotesize}
-            L'objet \lstinline{JSON} porte deux méthodes utiles pour transformer une chaine de caractère en JSON et inversement~:
+            L'objet \lstinline{JSON} porte deux méthodes utiles pour transformer une chaîne de caractère en JSON et inversement~:
             \begin{itemize}
-                \item \lstinline{parse}~: Transforme une chaine de caractère en JSON~.
-                Utilise pour stocker ou transférer un JSON.
-                \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+                \item \lstinline{parse}~: Transforme une chaîne de caractère en JSON~.
+                Utilisé pour \textquote{charger} un JSON stocké ou transféré.
+                \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > JSON.parse('{"nom":"Adrien","age":25,"JavaScript":{"notes":[12,15,18],"Appréciation":"Excellent"},"CSS":{"notes":[10,14,16],"Appréciation":"Bon"}}')
 {
   nom: 'Adrien',
@@ -1985,9 +2039,9 @@ true
   CSS: { notes: [ 10, 14, 16 ], 'Appréciation': 'Bon' }
 }
                 \end{lstlisting}
-                \item \lstinline{stringify}~: Transforme un JSON en chaine de caractère.
+                \item \lstinline{stringify}~: Transforme un JSON en chaîne de caractère.
                 Utile pour utiliser en JavaScript un JSON stocker dans un fichier ou réceptionné sur le réseau.
-                \begin{lstlisting}[language=Bash,title={\scriptsize{Node.js}},basicstyle=\tiny\ttfamily]
+                \begin{lstlisting}[language=Bash,title={\tiny{Node.js}},basicstyle=\tiny\ttfamily]
 > JSON.stringify(adrien)
 '{"nom":"Adrien","age":25,"JavaScript":{"notes":[12,15,18],"Appréciation":"Excellent"},"CSS":{"notes":[10,14,16],"Appréciation":"Bon"}}'
                 \end{lstlisting}
@@ -2031,7 +2085,7 @@ true
     \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
         \begin{footnotesize}
             Le constructeur se déclare dans la classe avec le mot-clé \lstinline{constructor}.
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class Car {
 
     static getFactoryWheelNumber() {
@@ -2048,7 +2102,7 @@ class Car {
         return this.wheel;
     }
 }
-let myCar = new Car("Renault")
+let myCar = new Car("Renault");
 console.log(myCar.brand); // Renault
             \end{lstlisting}
             Le constructeur a un paramètre, la marque de la voiture.
@@ -2059,7 +2113,7 @@ console.log(myCar.brand); // Renault
     \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
         \begin{footnotesize}
             Deux instances d'une même classe ont bien des propriétés indépendantes.
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class Car {
 
     static getFactoryWheelNumber() {
@@ -2079,8 +2133,8 @@ class Car {
 function carAccident(car) {
     car.wheel = 3;
 }
-let renault = new Car("Renault")
-let mercedes = new Car("Mercedes")
+let renault = new Car("Renault");
+let mercedes = new Car("Mercedes");
 carAccident(renault);
 console.log("La Renautl a " + renault.wheel + " roues"); // 3 roues
 console.log("La Mercedes a " + mercedes.wheel + " roues"); // 4 roues
@@ -2090,7 +2144,7 @@ console.log("La Mercedes a " + mercedes.wheel + " roues"); // 4 roues
 
     \begin{frame}[fragile]{Créer ses classes ou types d'objet}{Le constructeur}
         Donne en sortie~:
-        \begin{lstlisting}[language=Bash,title={\scriptsize{Commande dans un Shell/Console/PowerShell}}]
+        \begin{lstlisting}[language=Bash,title={\tiny{Commande dans un Shell/Console/PowerShell}}]
 La Renautl a 3 roues
 La Mercedes a 4 roues
         \end{lstlisting}
@@ -2107,7 +2161,7 @@ La Mercedes a 4 roues
             Un constructeur n'a pas nécessairement d'argument.
             Si les propriétés de l'instance peuvent-être générées par le navigateur ou un appel d'API, quelque chose d'extérieur au programme et donc ne sont pas à passer en paramètre.
         \end{footnotesize}
-        \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class BrowserTracking {
     static geolocationSuccess(resolve, position) { resolve(position); }
     static geolocationError(reject, err) { reject(null); }
@@ -2142,7 +2196,7 @@ class BrowserTracking {
         \begin{footnotesize}
             Une méthode est une fonction qui agit grâce/sur les propriétés de l'objet.
             Exemple ici de la méthode \lstinline{isPrime}~:
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class MDSNumber {
     constructor (integer) {
         this.integer = integer
@@ -2169,7 +2223,7 @@ class MDSNumber {
         \begin{footnotesize}
             Une fonction dîte statique, préfixée par \lstinline{static} en JS~.
             Exemple ici des fonctions \lstinline{mean} et \lstinline{factorial} qui n'utilisent pas de propriété de l'instance (même pas de constructeur)~:
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class MathUtilities {
     // Static method to calculate the square of a number
     static mean(numbers) {
@@ -2198,7 +2252,7 @@ console.log(MathUtilities.factorial(5)); // Output 120
         \begin{footnotesize}
             Si un objet \textbf{est} également un autre objet (conceptuellement), il doit pouvoir hériter de ce dernier.
             Ici avec une corde d'escalade qui est aussi une corde et en hérite donc~:
-            \begin{lstlisting}[language=JavaScript,title={\scriptsize{Script JavaScript}},basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}},basicstyle=\tiny\ttfamily]
 class Corde{
     constructor(longueur){
         this.longueur = longueur
@@ -2286,6 +2340,8 @@ console.log(cordeEscalade.longueurMax(10)) // Et également d'une corde d'escala
         \includegraphics[width=10cm]{image/bom-n-dom}
     \end{frame}
 
+    \subsection{L'objet navigator}\label{subsec:navigator}
+
     \begin{frame}{Les objets du BOM}{L'objet \lstinline{navigator}}
         L'objet \lstinline{navigator} porte de nombreuses données et méthodes sur la machine sur laquelle tourne le navigateur, le navigateur lui-même, la géolocalisation supposée, \textit{etc}.
         \bigbreak
@@ -2297,21 +2353,901 @@ console.log(cordeEscalade.longueurMax(10)) // Et également d'une corde d'escala
         \end{itemize}
     \end{frame}
 
+    \subsection{L'objet location}\label{subsec:location}
+
     \begin{frame}{Les objets du BOM}{L'objet \lstinline{location}}
-        L'objet \lstinline{location} porte toutes les données relatives à l'URL de page.
-        \bigbreak
-        Exercice \execcounterdispinc{}~:
-        \begin{columns}
-            \column{0.6\textwidth}
+        \begin{tiny}
+            L'objet \lstinline{location} porte de nombreuses données et méthodes, l'URL en cours de navigation, le rechargement de l'URL, le changement d'URL (de page), \textit{etc}.
+            \bigbreak
+            Exercice \execcounterdispinc{}~:
             \begin{itemize}
                 \item Découvrir l'objet \lstinline{location} dans la console du navigateur.
-                \item Ajouter au constructeur de la classe \lstinline{Chatter} de l'exercice précédent, une propriété \lstinline{origine} qui est le nom du serveur, soit le \lstinline{hostname}.
-                \item Comment utiliser \lstinline{location} pour lié une adresse à une donnée dans une base de donnée~?
+                \item Découvrir le fonctionnement de la méthode \lstinline{replace} (\url{https://developer.mozilla.org/fr/docs/Web/API/Location/replace}) et la faire fonctionner dans la console du navigateur.
+                \item Découvrir le fonctionnement de la méthode \lstinline{reload} (\url{https://developer.mozilla.org/fr/docs/Web/API/Location/reload}) et la faire fonctionner dans la console du navigateur.
+                \item Comment utiliser \lstinline{location} pour lier une adresse à une donnée dans une base de donnée~?
+                \item Ajouter au constructeur de la classe \lstinline{Chatter} de l'exercice précédent, une propriété \lstinline{origine} qui est le nom du serveur, c'est-à-dire, le \lstinline{hostname}.
+                \item Modifier au besoin méthode qui ajoute les messages de \lstinline{Chatter} pour qu'ils aient comme propriétés~:
+                \begin{itemize}
+                    \begin{tiny}
+                        \item \lstinline{message}~: Le message en lui-même, une chaîne de caractère.
+                        \item \lstinline{date}~: La date de l'ajout du message, un objet \lstinline{Date}.
+                        \item \lstinline{id}~: Un identifiant unique généré avec \lstinline{Math.random().toString(16).slice(2)}.
+                    \end{tiny}
+                \end{itemize}
+                \item Ajouter à \lstinline{Chatter} une méthode qui permet de retourner un message par son \lstinline{id}.
+                \item Tester cela dans un script ajouté à un page HTML et tenter de retourner des messages par leur \lstinline{id}.
+                Tester également quand l'\lstinline{id} est incorrect.
             \end{itemize}
-            \column{0.4\textwidth}
-            \centering
-            \includegraphics[width=5cm]{image/browser-location}
+        \end{tiny}
+    \end{frame}
+
+    \subsection{L'objet history}\label{subsec:history}
+
+    \begin{frame}{Les objets du BOM}{L'API \lstinline{history}\footnote{\label{history}Manipuler l'historique du navigateur, \url{https://developer.mozilla.org/fr/docs/Web/API/History_API}}}
+        L'API History permet de manipuler l'historique de navigation du navigateur.
+        Les méthodes principales sont:
+        \begin{itemize}
+            \item \lstinline{back()}, équivaut à cliquer sur le bouton \textquote{précédent} du navigateur.
+            \item \lstinline{forward()}, équivaut à cliquer sur le bouton \textquote{suivant} du navigateur.
+            \item \lstinline{go()}, pour aller à une page spécifique de l'historique.
+            \item \lstinline{pushState()}, pour ajouter une entrée à l'historique.
+            \item \lstinline{replaceState()}, pour modifier l'entrée actuelle de l'historique.
+        \end{itemize}
+        \bigbreak
+        Cette API permet d'améliorer l'impression de navigation dans une seule et même page, sans en changer.
+        Par exemple sur un application de streaming de musique, si on changeait de page en navigant, la lecture s'interromprait.
+        Cette API de revenir en arrière, modifier l'historique, sans avoir changé de page.
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Méthode \lstinline{back()} de l'API \lstinline{history}\cref{history}}
+        La méthode \lstinline{back()} permet de reculer d'une page dans l'historique de navigation.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.history.back();
+        \end{lstlisting}
+        Équivaut à cliquer sur le bouton \textquote{précédent} du navigateur.
+        \begin{center}
+            \includegraphics[width=3cm]{image/page-first}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Méthode \lstinline{forward()} de l'API \lstinline{history}\cref{history}}
+        La méthode \lstinline{forward()} permet d'avancer d'une page dans l'historique de navigation.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.history.forward();
+        \end{lstlisting}
+        Équivaut à cliquer sur le bouton \textquote{suivant} du navigateur.
+        \begin{center}
+            \includegraphics[width=3cm]{image/page-last}
+        \end{center}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Méthode \lstinline{go()} de l'API \lstinline{history}\cref{history}}
+        La méthode \lstinline{go()} permet de naviguer vers une page spécifique de l'historique en utilisant un index relatif.
+        L'argument à passer est un entier, l'index dans l'historique.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.history.go(-1); // Reculer d'une page
+window.history.go(1);  // Avancer d'une page
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Événement \lstinline{popstate} de l'API \lstinline{history}\cref{history}}
+        L'événement \lstinline{popstate} est déclenché lorsque l'entrée active de l'historique change.
+        Il est généré par l'élément \lstinline{window} et prend en second argument l'action à réaliser lorsque l'élément est déclenché.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.addEventListener('popstate', (event) => {
+    console.log('location: ' + document.location + ', state: ' + JSON.stringify(event.state));
+});
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Méthode \lstinline{pushState()} de l'API \lstinline{history}\cref{history}}
+        La méthode \lstinline{pushState()} ajoute une entrée à l'historique de navigation.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.history.pushState({page: 1}, 'title 1', '?page=1');
+        \end{lstlisting}
+        \begin{itemize}
+            \item Le premier paramètre est un objet qui représente l'état associé à l'entrée.
+            \item Le second paramètre ne sert à rien, c'est un héritage garder pour ne pas casser des compatibilités.
+            Il peut être une chaîne de caractères vide.
+            \item Le troisième paramètre est le path d'une URL de la nouvelle entrée.
+            Elle doit être sur le même domaine.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Les objets du BOM}{Méthode \lstinline{replaceState()} de l'API \lstinline{history}\cref{history}}
+        La méthode \lstinline{replaceState()} modifie l'entrée actuelle de l'historique, celle de la page en cours de navigation.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+window.history.replaceState({page: 2}, 'title 2', '?page=2');
+        \end{lstlisting}
+        \begin{itemize}
+            \item Le premier paramètre est un objet qui représente l'état associé à l'entrée.
+            \item Le second paramètre ne sert à rien, c'est un héritage garder pour ne pas casser des compatibilités.
+            Il peut être une chaîne de caractères vide.
+            \item Le troisième paramètre est le path d'une URL de la nouvelle entrée.
+            Elle doit être sur le même domaine.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Les objets du BOM}{Exercice \execcounterdispinc{}}
+        Dans la classe \lstinline{Chatter} déclarée précédemment, modifier la méthode qu'il convient pour ajouter à l'historique de navigation les pages correspondants aux messages créés.
+        \bigbreak
+        \centering
+        \includegraphics[width=3cm]{image/intelligence}
+    \end{frame}
+
+    \subsection{L'object screen}\label{subsec:screen}
+
+    \begin{frame}[fragile]{Les objets du BOM}{L'objet \lstinline{screen}}
+        L'objet \lstinline{screen} porte de nombreuses données sur la taille de la fenêtre du navigateur.
+        \bigbreak
+        Exercice \execcounterdispinc{}~:
+        \begin{itemize}
+            \item Découvrir l'objet \lstinline{screen} dans la console du navigateur et \url{https://developer.mozilla.org/en-US/docs/Web/API/Screen}.
+            \item Initialiser dans le constructeur de \lstinline{Chatter} un booléen \lstinline{isMobile} à \lstinline{true} si l'écran est celui d'un mobile, sinon à \lstinline{false}, à l'aide de l'objet \lstinline{screen}.
+        \end{itemize}
+        \begin{center}
+            \includegraphics[width=3cm]{image/intelligence}
+        \end{center}
+    \end{frame}
+
+
+    \section{Document Object Model}\label{sec:dom}
+
+    \subsection{Nœuds}\label{sucsec:nodes}
+
+    \begin{frame}[fragile]{La DOM API}{Les nœuds\cref{eloquent-javaScript}}
+        Chaque balise HTML peut être considérée comme un nœud parent ou/et enfant d'un autre.
+        \bigbreak
+        Ici \lstinline{html} est parent de \lstinline{head} et \lstinline{body}, \lstinline{body} est parent de \lstinline{h1} et \lstinline{p}, \textit{etc}.
+        \begin{lstlisting}[language=HTML,title={\tiny{HTML}}]
+<!doctype html>
+<html>
+  <head>
+    <title>My home page</title>
+  </head>
+  <body>
+    <h1>My home page</h1>
+    <p>Hello, I am Marijn and this is my home page.</p>
+    <p>I also wrote a book! Read it
+      <a href="http://eloquentjavascript.net">here</a>.</p>
+  </body>
+</html>
+        \end{lstlisting}
+        Si on a un parent c'est que l'on est un enfant\ldots
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Les nœuds\cref{eloquent-javaScript}}
+        \begin{center}
+            \includegraphics[width=6cm]{image/html-boxes}
+        \end{center}
+    \end{frame}
+
+    \subsection{Trouver les élements (nœuds)}\label{subsec:elements}
+    \begin{frame}{La DOM API}{Trouver les élements (nœuds)\cref{eloquent-javaScript}}
+        Un nœud aussi appelé élement peut être retourné grâce aux méthodes de l'objet \lstinline{document}~:
+        \begin{itemize}
+            \item \lstinline{getElementById}~: Retourne l'élément avec l'identifiant donné.
+            \item \lstinline{getElementsByTagName}~: Retourne une collection \lstinline{HTMLCollection} d'éléments avec le nom de balise donné.
+            \item \lstinline{getElementsByClassName}~: Retourne une collection \lstinline{HTMLCollection} d'éléments avec la classe donnée.
+            \item \lstinline{querySelector}~: Retourne le premier élément qui correspond au sélecteur CSS donné.
+            \item \lstinline{querySelectorAll}~: Retourne tous les éléments qui correspondent au sélecteur CSS donné dans une collection \lstinline{HTMLCollection}.
+        \end{itemize}
+        \begin{dangercolorbox}
+            \textbf{getElements} avec un \textbf{s} retourne une \lstinline{HTMLCollection}, \textbf{getElement} au singulier retourne un \lstinline{HTMLElement}
+        \end{dangercolorbox}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Trouver les élements (nœuds)\cref{eloquent-javaScript}}
+        Une collection \lstinline{HTMLCollection} est un type proche des tableaux.
+        Il est même possible de convertir une \lstinline{HTMLCollection} en \lstinline{Array} avec \lstinline{Array.from}, si nécessaire.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+let paragraphs = Array.from(document.getElementsByTagName("p"))
+        \end{lstlisting}
+        Sinon \lstinline{HTMLCollection} ne supportent que la boucle for / of et non for / in par exemple.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+for (let item of document.getElementsByTagName("p")) {
+    console.log(item.id);
+}
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Les propriétés d'un element\footnote{HTMLElement, \url{https://developer.mozilla.org/fr/docs/Web/API/HTMLElement}}}
+        \begin{scriptsize}
+            La \lstinline{HTMLCollection} est une collection d'objets \lstinline{HTMLElement}.
+            Ils ont de (trop) nombreuses propriétés, les plus utiles sont~:
+            \begin{itemize}
+                \item \lstinline{innerHTML}~: Contenu HTML de l'élément.
+                \item \lstinline{innerText}~: Contenu textuel de l'élément.
+                \item \lstinline{style}~: Style CSS de l'élément.
+                \item \lstinline{classList}~: Liste des classes de l'élément.
+                \item \lstinline{dataset}~: Liste des attributs \lstinline{data-*} de l'élément.
+                \item \lstinline{children}~: Liste des enfants de l'élément.
+                \item \lstinline{parentElement}~: Parent de l'élément.
+                \item \lstinline{hiden}~: Une valeur booléenne indiquant si l'élément est caché.
+                \item \lstinline{title}~: Une chaîne de caractères contenant le texte apparaissant dans la bulle d'information affichée lorsque la souris survole l'élément.
+                \item Bien, plus encore.
+                Partez du principe que la propriété que vous cherchez existe.
+                Il y a une propriété pour chaque attribut HTML~.
+                Il faut aller lire la documentation pour la connaître.
+            \end{itemize}
+            \begin{dangercolorbox}
+                Ces propriétés peuvent être \textbf{lues} et \textbf{écrites}.
+            \end{dangercolorbox}
+        \end{scriptsize}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Les méthodes d'un element}
+        \begin{footnotesize}
+            Les attributs et l'intérieur de la balise, que ce soit du texte ou un élément HTML enfant doivent pouvoir être créés/modifiés/supprimés.
+            Pour cela des méthodes qui prennent des arguments comme la valeur à mettre ou l'élément à ajouter sont disponibles~:
+            \begin{itemize}
+                \item \lstinline{setAttribute}~: Ajoute un attribut à un élément.
+                Prend comme paramètres, le nom de l'attribut suivit de sa valeur.
+                \item \lstinline{removeAttribute}~: Supprime un attribut à un élément.
+                \item \lstinline{appendChild}~: Ajoute un élément enfant à un l'élément.
+                \item \lstinline{removeChild}~: Supprime un élément enfant à un l'élément.
+                \item \lstinline{replaceChild}~: Remplace un élément enfant à un l'élément.
+                \item \lstinline{insertBefore}~: Insère un élément avant un autre
+                \item \lstinline{cloneNode}~: Clone un élément.
+                \item \lstinline{remove}~: Supprime l'élément.
+                \item \lstinline{getAttribute}~: Retourne la valeur de l'attribut donné.
+                \item \lstinline{hasAttribute}~: Retourne un booléen indiquant si l'élément a l'attribut donné.
+                \item \lstinline{querySelector}~: Retourne le premier élément qui correspond au sélecteur donné.
+                \item \lstinline{querySelectorAll}~: Retourne tous les éléments qui correspondent au sélecteur donné dans une collection \lstinline{HTMLCollection}.
+            \end{itemize}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Les évènement d'un élément}
+        \begin{footnotesize}
+            Un évènement peut être déclenché sous de multiples conditions, grâce aux \lstinline{EventListener}.
+            Ils prennent en paramètre un évènement et l'action à y associer.
+            \begin{itemize}
+                \item Lorsque la page est chargée complètement.
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("La page est chargée");
+});
+                \end{lstlisting}
+                \item Lorsque l'input de l'élément d'un formulaire est modifié.
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+let name = document.getElementById("name");
+name.addEventListener("input", function() {
+    console.log("Le nom a été modifié");
+});
+                \end{lstlisting}
+            \end{itemize}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Les évènement d'un élément}
+        \begin{footnotesize}
+            \begin{itemize}
+                \item Lorsque la souris passe sur l'élément.
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+let name = document.getElementById("submit-button");
+name.addEventListener("mouseover", function() {
+    console.log("La souris est sur le bouton");
+});
+                \end{lstlisting}
+                \item Lorsque l'élément est cliqué.
+                \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+let name = document.getElementById("submit-button");
+name.addEventListener("click", function() {
+    console.log("Clique sur le bouton");
+});
+                \end{lstlisting}
+                \item \ldots
+            \end{itemize}
+        \end{footnotesize}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Exercice \execcounterdispinc{}}
+        Dans le HTML créé précédemment~:
+        \begin{itemize}
+            \item Importer une bibliothèque CSS comme Bootstrap, ou une autre que vous connaissez pour faciliter la mise en forme.
+            \item Créer un formulaire qui a comme \textit{inputs} les champs nécessaires à l'initialisation du constructeur de \lstinline{Chatter}.
+            \item Un bouton de soumission du formulaire qui n'a pas d'action définit dans le HTML~.
+            \item Créer un bloque de code qui n'est exécuté que quand la page est chargée.
+            \item Dans ce dernier bloque de code, ajouter un évènement sur le bouton de soumission qui récupère les valeurs des \textit{inputs} et initialise un nouvel objet \lstinline{Chatter}.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{La DOM et BOM API}{Exercice \execcounterdispinc{}}
+        Toujours dans le même HTML~:
+        \begin{itemize}
+            \item Utiliser \lstinline{location} pour récupérer, si il y en a un, le hash et l'utiliser comme identifiant de \lstinline{Chatter}.
+            \item Le paramètre nom prend maintenant un argument par défaut, la chaîne de caractère \lstinline{anonyme}.
+            \item Si il y a un hash, l'identifiant de \lstinline{Chatter} est ce hash et le nom celui, par défaut.
+            \item Si il y a un hash, préremplir l'input identifiant du formulaire avec ce dernier.
+            \item Modifier le titre du document pour qu'il contienne le nom de l'objet \lstinline{Chatter} quand il est renseigné, sinon, le hash.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=2cm]{image/intelligence}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Se déplacer dans l'arborescence\cref{eloquent-javaScript}}
+        Un element porte de nombreuses propriétés pour se déplacer dans l'arborescence.
+        \begin{columns}
+            \column{0.7\textwidth}
+            \begin{footnotesize}
+                \begin{itemize}
+                    \item \lstinline{parentNode}~: Parent de l'élément.
+                    \item \lstinline{childNodes}~: Liste des enfants de l'élément.
+                    \item \lstinline{firstChild}~: Premier enfant de l'élément.
+                    \item \lstinline{lastChild}~: Dernier enfant de l'élément.
+                    \item \lstinline{nextSibling}~: Élément suivant du parent, un nœud ou un élément texte.
+                    \item \lstinline{previousSibling}~: Élément précédent du parent, un nœud ou un élément texte.
+                    \item \lstinline{children}~: Liste des enfants de l'élément.
+                    \item \lstinline{firstElementChild}~: Premier enfant de l'élément.
+                    \item \lstinline{lastElementChild}~: Dernier enfant de l'élément.
+                    \item \lstinline{nextElementSibling}~: Retourne toujours le nœud suivant du parent.
+                    \item \lstinline{previousElementSibling}~: Retourne toujours le nœud précédent du parent.
+                \end{itemize}
+            \end{footnotesize}
+            \column{0.3\textwidth}
+            \center
+            \includegraphics[width=4cm]{image/moving-in-the-tree}
         \end{columns}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Modifier l'arborescence\cref{eloquent-javaScript}}
+        \begin{tiny}
+            Presque tout sur la structure de données DOM peut être modifié.
+            La forme de l'arbre du document peut être modifiée en changeant les relations parent-enfant.
+            Les nœuds ont une méthode \lstinline{remove} pour les retirer de leur nœud parent actuel.
+            Pour ajouter un nœud enfant à un nœud élément, nous pouvons utiliser \lstinline{appendChild}, qui le place à la fin de la liste des enfants, ou \lstinline{insertBefore}, qui insère le nœud donné en premier argument avant le nœud donné en second argument.
+        \end{tiny}
+        \begin{lstlisting}[language=HTML,title={\tiny{HTML}},basicstyle=\tiny\ttfamily]
+<p>One</p>
+<p>Two</p>
+<p>Three</p>
+
+<script>
+  let paragraphs = document.body.getElementsByTagName("p");
+  document.body.insertBefore(paragraphs[2], paragraphs[0]);
+</script>
+        \end{lstlisting}
+        \begin{tiny}
+            Un élément ne peut exister qu'à un seul endroit dans le document.
+            Ainsi, insérer le paragraphe 2 devant le paragraphe 0 le retirera d'abord de la fin du document puis l'insérera à l'avant, résultant en 2/0/1.
+            Toutes les opérations qui insèrent un nœud quelque part entraîneront, comme effet secondaire, son retrait de sa position actuelle (s'il en a une).
+            La méthode \lstinline{replaceChild} est utilisée pour remplacer un nœud enfant par un autre.
+            Elle prend comme arguments deux nœuds~: un nouveau nœud et le nœud à remplacer.
+            Le nœud remplacé doit être un enfant de l'élément sur lequel la méthode est appelée.
+            Notez que \lstinline{replaceChild} et \lstinline{insertBefore} attendent tous deux les mêmes arguments.
+        \end{tiny}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Créer un élément\cref{eloquent-javaScript}}
+        \begin{tiny}
+            Supposons que nous voulions écrire un script qui remplace toutes les images (\lstinline{<img>}) dans le document par le texte contenu dans leurs attributs \lstinline{alt}, qui spécifie une représentation textuelle alternative de l'image.
+            Cela implique non seulement de supprimer les images, mais aussi d'ajouter un nouveau nœud de texte pour les remplacer.
+        \end{tiny}
+        \begin{lstlisting}[language=HTML,title={\tiny{HTML}},basicstyle=\tiny\ttfamily]
+<p>The <img src="img/cat.png" alt="Cat"> in the
+  <img src="img/hat.png" alt="Hat">.</p>
+// l'attribut onclick est un évènement qui se déclenche lorsqu'on clique sur le bouton
+<p><button onclick="replaceImages()">Replace</button></p>
+<script>
+  function replaceImages() {
+    let images = document.body.getElementsByTagName("img");
+    for (let i = images.length - 1; i >= 0; i--) {
+      let image = images[i];
+      if (image.alt) {
+        let text = document.createTextNode(image.alt);
+        image.parentNode.replaceChild(text, image);
+      }
+    }
+  }
+</script>
+        \end{lstlisting}
+        \begin{tiny}
+            La boucle qui parcourt les images commence à la fin de la liste.
+            Cela est nécessaire car la liste de nœuds renvoyée par une méthode comme getElementsByTagName (ou une propriété comme childNodes) est dynamique.
+            C'est-à-dire qu'elle est mise à jour au fur et à mesure que le document change.
+        \end{tiny}
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Créer un élément\cref{eloquent-javaScript}}
+        \lstinline{document.createTextNode} crée un nouveau texte mais pour créer un élément classique, une balise HTML, il faut utiliser la méthode \lstinline{document.createElement}.
+        Elle prend en argument le nom de la balise à créer en chaîne de caractère.
+        \begin{lstlisting}[language=HTML,title={\tiny{HTML}},basicstyle=\tiny\ttfamily]
+<p>The <img src="img/cat.png" alt="Cat"> in the
+  <img src="img/hat.png" alt="Hat">.</p>
+<p><button onclick="replaceImages()">Replace</button></p>
+<script>
+  function replaceImages() {
+    let images = document.body.getElementsByTagName("img");
+    for (let i = images.length - 1; i >= 0; i--) {
+      let image = images[i];
+      if (image.alt) {
+        let text = document.createElement("i");
+        text.textContent = image.alt;
+        image.parentNode.replaceChild(text, image);
+      }
+    }
+  }
+</script>
+        \end{lstlisting}
+        Ici, ce n'est plus du texte mais la balise \lstinline{<i>} comme~?
+    \end{frame}
+
+    \begin{frame}[fragile]{La DOM API}{Créer un élément\cref{eloquent-javaScript}}
+        La méthode \lstinline{setAttribute}, qui prend 2 arguments, permet de donner à un attribut (premier argument) de la balise, \textit{i.e.}, l'élément créé, une valeur (second argument).
+        \begin{lstlisting}[language=HTML,title={\tiny{HTML}},basicstyle=\tiny\ttfamily]
+<p>The <img src="img/cat.png" alt="Cat"> in the
+  <img src="img/hat.png" alt="Hat">.</p>
+<p><button onclick="replaceImages()">Replace</button></p>
+<script>
+  function replaceImages() {
+    let images = document.body.getElementsByTagName("img");
+    for (let i = images.length - 1; i >= 0; i--) {
+      let image = images[i];
+      if (image.alt) {
+        let italicText = document.createElement("i");
+        italicText.setAttribute("style", "color: orange;" )
+        italicText.textContent = image.alt;
+        image.parentNode.replaceChild(italicText, image);
+      }
+    }
+  }
+</script>
+        \end{lstlisting}
+        Que fait cet attribut avec cette valeur~?
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Diviser le HTML qui appelle \lstinline{Chatter} en 3 zones comme dans la maquette ci-dessous.
+            \item Ajouter en dessous du formulaire une zone qui affiche toutes les données de \lstinline{Chatter}, celles déjà retournées par une méthode.
+            \item Cette action est toujours codée dans cette même classe, mais dans une autre méthode, (c'est une fonction avec effet de bord \emoji{winking-face}).
+        \end{itemize}
+        \bigbreak
+        \center
+        \includegraphics[width=5cm]{image/chatter-maquette}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Ajouter dans le script des messages à la classe \lstinline{Chatter}.
+            \item À chaque message ajouté, mettre à jour la zone de droite qui affiche les messages.
+        \end{itemize}
+        \begin{dangercolorbox}
+            Toujours utiliser la librairie CSS, bootstrap ou autre pour les nouveaux éléments, L'usage de JS ne doit pas détériorer le design de l'UI~.
+        \end{dangercolorbox}
+        \bigbreak
+        \center
+        \includegraphics[width=5cm]{image/chatter-maquette}
+    \end{frame}
+
+    \begin{frame}{La DOM API}{Exercice \execcounterdispinc{}}
+        Ajouter un formulaire pour ajouter un message à \lstinline{Chatter} en haut de la card message.
+        \begin{itemize}
+            \item Un input pour ajouter le texte d'un message.
+            \item L'input est \lstinline{disabled} par, mais activé dès qu'un \lstinline{Chatter} est instancié.
+            \item Un bouton de soumission du formulaire.
+            \item Un event \lstinline{click} ajoute le message à la classe \lstinline{Chatter}.
+            \item La liste des messages est mise à jour.
+        \end{itemize}
+        \bigbreak
+        \center
+        \includegraphics[width=5cm]{image/chatter-maquette-2}
+    \end{frame}
+
+
+    \section{Communication}\label{sec:communication}
+
+    \subsection{Généralités}\label{subsec:communication-basics}
+    \begin{frame}{Les protocoles}{Généralités\footnote{\label{sendbird-protocole}Protocoles de communication WebSocket vs. HTTP, \url{https://sendbird.com/fr/developer/tutorials/websocket-vs-http-communication-protocols}}}
+        HTTP est un protocole de communication semi-duplex, qui existe depuis un certain temps et constitue la base du Web depuis ses débuts.
+
+        HTTP date de 1989, inventé au CERN par Tim Berners-Lee\footnote{The birth of the Web, \url{https://home.cern/science/computing/birth-web}}.
+        \bigbreak
+        WebSocket, un protocole de communication full-duplex, est relativement plus récent et convient mieux aux applications en temps réel (ou presque\ldots) comme le live chat dans les applications mobiles, les notifications et ou les appels audio ou vidéo.
+
+        Websocket a été standardisé en 2011\footnote{The WebSocket Protocol, \url{https://datatracker.ietf.org/doc/html/rfc6455}}.
+        Il est géré par le JavaScript du navigateur.
+    \end{frame}
+
+    \subsection{WebSocket}\label{subsec:websocket}
+
+    \begin{frame}{Les protocoles}{Websocket, exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Que veut dire full-duplex~?
+            \item Y-a-t-il une contradiction avec une architecture client/serveur~?
+            \item Citer un autre protocol full-duplex.
+            \item Citer un protocol qui \textbf{n'est pas} full-duplex.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=5cm]{image/homework}
+    \end{frame}
+
+    \begin{frame}{Les protocoles}{Websocket\cref{sendbird-protocole}}
+        \centering
+        \includegraphics[width=12cm]{image/tutorial-websocket-protocol-chart}
+    \end{frame}
+
+    \begin{frame}{Les protocoles}{Websocket côté client (Navigateur)\footnote{\label{mozilla-websocket}WebSockets, \url{https://developer.mozilla.org/fr/docs/Web/API/WebSockets_API}}}
+        \begin{columns}
+            \column{0.5\textwidth}
+            \centering
+            \includegraphics[width=3.3cm]{image/client-support} \\ Client \\
+            \column{0.5\textwidth}
+            \centering
+            \includegraphics[width=6.5cm]{image/kids-on-the-phone}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Les protocoles}{Websocket côté serveur (liste non exhaustive !)\cref{mozilla-websocket}}
+        \begin{scriptsize}
+            \begin{itemize}
+
+                \item \href{https://github.com/uWebSockets/uWebSockets}{µWebSockets}~: Déclinaison plus légère et plus performante de WebSocket et écrite en \href{https://isocpp.org/}{C++11} et en \href{https://nodejs.org/fr/}{Node.js}.
+
+                \item \href{https://github.com/ClusterWS/ClusterWS}{ClusteWS~}: Framework léger, rapide et puissant qui permet de construire des applications en \href{https://nodejs.org/fr/}{Node.js}.
+
+                \item \href{http://socket.io}{Socket.IO}~: API WebSocket puissante et multiplateforme en \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://socketcluster.io/\#!/}{SocketCluster}~: Framework open source en temps réel en \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://www.totaljs.com/}{Total.js}~: FrameWork pour web application en \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://www.npmjs.com/package/faye-websocket}{Faye}~: Combine WebSocket(bidirectionnelle) et EventSource(unidirectionnelle), côté serveur et côté client en \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://signalr.net/}{SignalR}~: SignalR est une nouvelle bibliothèque pour les développeurs \href{https://dotnet.microsoft.com/apps/aspnet}{ASP.NET}.
+
+                \item \href{https://caddyserver.com/docs/websocket}{Caddy}~: Serveur web capable de créer des WebSockets serveur/proxy(stdin/stdout, echo, cat, \ldots).
+
+                \item \href{https://github.com/websockets/ws}{ws}~: La plus populaire des WebSockets pour client \& serveur en \href{https://nodejs.org}{Node.js}.
+
+                \item \href{https://github.com/bigstepinc/jsonrpc-bidirectional}{jsonrpc-bidirectional}~: Implémentation de JSON-RPC 2.0 sur WebSocket.
+
+                \item \href{https://github.com/ninenines/cowboy}{cowboy}~: Cowboy est un petit serveur HTTP rapide et moderne pour Erlang/OTP basé sur WebSocket.
+
+                \item \href{https://zeromq.org}{ZeroMQ}~: ZeroMQ est une bibliothèque de fonctions pour transporter des messages avec divers protocoles IPC, TCP, UDP, TIPC, diffusion de groupe et WebSocket.
+
+            \end{itemize}
+        \end{scriptsize}
+    \end{frame}
+
+    \begin{frame}{Websocket}{Exercice \execcounterdispinc{}}
+        Tester et expliquer ce que font~:
+        \begin{itemize}
+            \item Le fichier \lstinline{server.js}.
+            \item Le fichier \lstinline{ws.html}.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=3cm]{image/intelligence}
+    \end{frame}
+
+    \subsection{HTTP}\label{subsec:http}
+
+    \begin{frame}{Les protocoles}{HTTP\cref{sendbird-protocole}}
+        \centering
+        \includegraphics[width=12cm]{image/Tutorial-HTTP-connection-chart}
+    \end{frame}
+
+    \subsection{WebSocket VS HTTP}\label{subsec:ws-vs-http}
+
+    \begin{frame}{Les protocoles}{HTTP\cref{sendbird-protocole}}
+        \centering
+        \includegraphics[width=12cm]{image/Tutorial-WebSocket-vs.-HTTP-communication-diagram}
+    \end{frame}
+
+    \begin{frame}{HTTP}{Introduction aux méthodes HTTP\footnote{\label{mozilla-http-methods}Méthodes de requête HTTP, \url{https://developer.mozilla.org/fr/docs/Web/HTTP/Methods}}}
+        \begin{itemize}
+            \item HTTP définit des méthodes de requête pour interagir avec les ressources.
+            \item Ces méthodes sont souvent appelées \textit{verbes HTTP}.
+            \item Les méthodes partagent parfois des fonctionnalités comme la \textit{sécurité}, l'\textit{idempotence}, ou la possibilité d'être \textit{mise en cache}.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{HTTP}{Méthodes courantes\cref{mozilla-http-methods}}
+        \begin{itemize}
+            \item \lstinline{GET} : Récupère une ressource, sans modifier l'état du serveur (idempotence).
+            Autorisée dans les \lstinline{<form>} HTML. Des données peuvent être envoyées dans l'URL~.
+            \item \lstinline{HEAD} : Similaire à \lstinline{GET}~, sans le corps de la réponse.
+            \item \lstinline{POST} : Envoie des données dans le corps de la requête, créant ou modifiant une ressource.
+            Autorisée dans les \lstinline{<form>} HTML~.
+            \item \lstinline{PUT} : Remplace la ressource avec les données envoyées.
+            \item \lstinline{DELETE} : Supprime une ressource.
+        \end{itemize}
+        \begin{dangercolorbox}
+            \lstinline{POST} et \lstinline{GET} sont compatibles avec les formulaires, mais à quoi donc servent alors les autres~?
+        \end{dangercolorbox}
+    \end{frame}
+
+    \begin{frame}{HTTP}{Autres méthodes\cref{mozilla-http-methods}}
+        \begin{itemize}
+            \item \lstinline{CONNECT} : Établit un tunnel vers le serveur cible.
+            \item \lstinline{OPTIONS} : Renvoie les options de communication avec la ressource.
+            \item \lstinline{TRACE} : Effectue un test aller-retour sur le chemin suivi.
+            \item \lstinline{PATCH} : Applique des modifications partielles à une ressource.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{HTTP}{Introduction à Content-Type\footnote{\label{mozilla-content-type}Content-Type, \url{https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Content-Type}}}
+        \begin{itemize}
+            \item \textbf{Content-Type} : Indique le type MIME de la ressource.
+            \item Utilisé dans les réponses pour informer le client du type de contenu renvoyé.
+            \item Utilisé dans les requêtes POST/PUT pour indiquer au serveur le type de données envoyées.
+        \end{itemize}
+        \bigbreak
+        Pourquoi pas dans les GET~?
+        \pause
+        La donnée est toujours dans l'URL et non dans le corps de la requête comme pour le POST~.
+        C'est donc inutile.
+    \end{frame}
+
+    \begin{frame}{HTTP}{Directives de Content-Type\cref{mozilla-content-type}}
+        \begin{itemize}
+            \item \lstinline{media-type} : Type MIME des données.
+            \item \lstinline{charset} : Encodage des caractères.
+            \item \lstinline{boundary} : Limites pour les entités multipart.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{HTTP}{Exemple : Formulaires HTML\cref{mozilla-content-type}}
+        \begin{lstlisting}[language=HTML]
+<form action="/" method="post" enctype="multipart/form-data">
+  <input type="text" name="description" value="du texte" />
+  <input type="file" name="monFichier" />
+  <button type="submit">Envoyer</button>
+</form>
+        \end{lstlisting}
+        \begin{itemize}
+            \item Requête POST envoyée avec Content-Type multipart/form-data.
+        \end{itemize}
+        \begin{lstlisting}[language=HTML]
+<form action="/recherche" method="get">
+    <input type="text" name="q" value="recherche" />
+    <button type="submit">Rechercher</button>
+</form>
+        \end{lstlisting}
+        \begin{itemize}
+            \item Requête GET envoyée avec Content-Type application/x-www-form-urlencoded.
+        \end{itemize}
+
+    \end{frame}
+
+
+    \begin{frame}{Tableau des codes de statut HTTP\footnote{Codes de réponse HTTP, \url{https://developer.mozilla.org/fr/docs/Web/HTTP/Status}}}
+        \begin{tabular}{|p{1.5cm}|p{9.5cm}|}
+            \hline
+            \textbf{Code} & \textbf{Description}                                                         \\
+            \hline
+            100-199       & Réponses informatives (e.g. 100 Continue, 101 Switching Protocols)           \\
+            \hline
+            200-299       & Succès (e.g. 200 OK, 201 Created)                                            \\
+            \hline
+            300-399       & Redirections (e.g. 301 Moved Permanently, 302 Found)                         \\
+            \hline
+            400-499       & Erreurs client (e.g. 400 Bad Request, 404 Not Found, 405 Method Not Allowed) \\
+            \hline
+            500-599       & Erreurs serveur (e.g. 500 Internal Server Error, 503 Service Unavailable)    \\
+            \hline
+        \end{tabular}
+    \end{frame}
+
+    \subsection{L'API fetch}\label{subsec:fetch-api}
+
+    \begin{frame}{Introduction à l'API \lstinline{fetch}\footnote{\label{mozilla-fetch}Fetch API, Mozilla, \url{https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch}}}
+        \begin{itemize}
+            \item L'API \lstinline{fetch} fournit une interface JavaScript pour accéder et manipuler des requêtes et réponses HTTP~.
+            \item Elle utilise les promesses pour gérer les opérations asynchrones.
+            \item L'API \lstinline{fetch} est une alternative moderne à XMLHttpRequest.
+            \item Elle permet une gestion plus simple et plus puissante des requêtes HTTP~.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=4cm]{image/http-tunnel}
+    \end{frame}
+
+    \begin{frame}{Qu'est-ce qu'une Promesse ?}
+        \begin{itemize}
+            \item Une Promesse est un objet représentant l'achèvement ou l'échec éventuel d'une opération asynchrone.
+            \item Trois états possibles :
+            \begin{itemize}
+                \item \textbf{Pending} (en attente) : initial, ni résolu ni rejeté.
+                \item \textbf{Fulfilled} (résolu) : l'opération a réussi.
+                \item \textbf{Rejected} (rejeté) : l'opération a échoué.
+            \end{itemize}
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=5cm]{image/promise}
+    \end{frame}
+
+    \begin{frame}[fragile]{Syntaxe : async, await, then, catch}
+        \begin{itemize}
+            \item \lstinline{async} : permet de définir une fonction asynchrone.
+            \item \lstinline{await} : pause l'exécution de la fonction asynchrone jusqu'à ce que la Promesse soit résolue.
+            \item \lstinline{then} : méthode pour gérer la résolution de la Promesse.
+            \item \lstinline{catch} : méthode pour gérer le rejet de la Promesse.
+        \end{itemize}
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+async function fetchData() {
+    try {
+        const response = await fetch("https://api.coinbase.com/v2/exchange-rates?currency=BTC");
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+fetchData().then(
+    () => console.log('Données récupérées')
+); // Pas de catch, car les erreurs sont esceptées, ça fonctionne toujours
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Syntaxe : async, await, then, catch\cref{mozilla-fetch}}
+        Une promise qui ne fonctionne pas, on passe dans catch.
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+async function fetchData() {
+    // NOTEZ QUE L'ADRESSE EST FAUT C4EST COIASE AU LIEU DE COINBASE
+    const response = await fetch("https://api.coiase.com/v2/exchange-rates?currency=BTC");
+    const data = await response.json();
+    console.log(data);
+}
+fetchData().then(
+    () => console.log('Données récupérées')
+).catch(
+    () => console.log('Erreur de fetch')
+);
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Faire une requête\cref{mozilla-fetch}}
+        \begin{itemize}
+            \item Utilisation de la méthode \lstinline{fetch()}.
+            \item Exemple de requête GET, la requête par défaut :
+        \end{itemize}
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+async function btcData() {
+    const reponse = await fetch("https://api.coinbase.com/v2/exchange-rates?currency=BTC");
+    const btc = await reponse.json();
+    console.log(btc);
+    return btc
+}
+btc = await btcData();
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}[fragile]{Options de la requête\cref{mozilla-fetch}}
+        \begin{itemize}
+            \item La méthode \lstinline{fetch()} accepte un deuxième paramètre optionnel pour configurer la requête.
+            \item Exemple de requête POST :
+        \end{itemize}
+        \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
+async function postData(url = "", donnees = {}) {
+    const response = await fetch(url, {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(donnees),
+    });
+    return response.json();
+}
+        \end{lstlisting}
+    \end{frame}
+
+    \begin{frame}{Le serveur \lstinline{ChatServer.js}}
+        Permet de stocker les informations relatives aux Chatters et à leurs messages.
+        \bigbreak
+        C'est une API JSON couplée à une base de données.
+        \bigbreak
+        \centering
+        \includegraphics[width=6cm]{image/api-server}
+    \end{frame}
+
+    \begin{frame}{Routes \lstinline{GET} du serveur \lstinline{ChatServer.js}}
+        \begin{small}
+            \begin{itemize}
+                \item \textbf{GET /}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Retourne un message de bienvenue.
+                        \item Méthode: \lstinline{app.get('/')}
+                    \end{tiny}
+                \end{itemize}
+                \item \textbf{GET /v1/:userId/messages}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Récupère tous les messages d'un utilisateur.
+                        \item Méthode: \lstinline{app.get('/v1/:userId/messages')}
+                    \end{tiny}
+                \end{itemize}
+                \item \textbf{GET /v1/:userId/messages/last-five}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Récupère les cinq derniers messages d'un utilisateur.
+                        \item Méthode: \lstinline{app.get('/v1/:userId/messages/last-five')}
+                    \end{tiny}
+                \end{itemize}
+                \item \textbf{GET /v1/message/:messageId}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Récupère un message par son ID.
+                        \item Méthode: \lstinline{app.get('/v1/message/:messageId')}
+                    \end{tiny}
+                \end{itemize}
+                \item \textbf{GET /v1/chatter/:id}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Récupère un utilisateur par son ID.
+                        \item Méthode: \lstinline{app.get('/v1/chatter/:id')}
+                    \end{tiny}
+                \end{itemize}
+            \end{itemize}
+        \end{small}
+    \end{frame}
+
+    \begin{frame}{Routes \lstinline{POST} du serveur \lstinline{ChatServer.js}}
+        \begin{itemize}
+            \item \textbf{POST /v1/message}
+            \begin{itemize}
+                \item Description: Ajoute un nouveau message.
+                \item Méthode: \lstinline{app.post('/v1/message')}
+                \item Paramètres:
+                \begin{itemize}
+                    \item \lstinline{content} (string) - Le contenu du message.
+                    \item \lstinline{id} (integer) - L'ID unique du message.
+                    \item \lstinline{userId} (integer) - L'ID de l'utilisateur qui envoie le message.
+                    \item \lstinline{date} (date) - La date et l'heure d'envoi du message.
+                \end{itemize}
+            \end{itemize}
+            \item \textbf{POST /v1/chatter}
+            \begin{itemize}
+                \item Description: Ajoute un nouvel utilisateur.
+                \item Méthode: \lstinline{app.post('/v1/chatter')}
+                \item Paramètres:
+                \begin{itemize}
+                    \item \lstinline{name} (string) - Le nom de l'utilisateur.
+                    \item \lstinline{id} (integer) - L'ID unique de l'utilisateur.
+                    \item \lstinline{latitude} (float) - La latitude de la position de l'utilisateur.
+                    \item \lstinline{longitude} (float) - La longitude de la position de l'utilisateur.
+                    \item \lstinline{hostname} (string) - Le nom d'hôte de l'utilisateur.
+                    \item \lstinline{isMobile} (boolean) - Indique si l'utilisateur utilise un appareil mobile.
+                    \item \lstinline{messageNumber} (integer) - Le nombre de messages envoyés par l'utilisateur.
+                \end{itemize}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Communication client/serveur}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Lister les actions dans le script de \lstinline{Chatter} qui devraient faire des appels au serveur.
+            \item Associer ces actions aux routes du serveur \lstinline{chatServer.js}.
+            \item Résumer ces communications dans un schéma.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=3cm]{image/question-mark}
+    \end{frame}
+
+
+    \begin{frame}{Développement de la communication}{Exercice \execcounterdispinc{}}
+        \begin{itemize}
+            \item Dans le script précédemment développé, en utilisant l'API \lstinline{fetch}, connecter \lstinline{Chatter} à l'API, donc à la base de données.
+            Les données seront donc persistantes.
+            \item Faire des tests et une démonstration.
+        \end{itemize}
+        \bigbreak
+        \centering
+        \includegraphics[width=6cm]{image/fireworks}
     \end{frame}
 
 

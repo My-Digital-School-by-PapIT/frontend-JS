@@ -1,39 +1,67 @@
 <!doctype html>
 <html>
 <head>
+    <meta charset="utf-8"/>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>This is the title of the webpage!</title>
 </head>
 <body>
-<p>This is an example paragraph. Anything in the <strong>body</strong> tag will appear on the page, just like this
-    <strong>p</strong> tag and its contents.</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h4>Chatter</h4>
+                </div>
+                <div class="p-3">
+                <!-- Form containing chatter parameters -->
+                <form id="chatter-form">
+                <div class="form-group mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="chatter-id">ID</label>
+                    <input type="number" class="form-control" id="chatter-id" placeholder="Enter your ID" min="1"
+                           step="1" required>
+                </div>
+                <button class="btn btn-primary">Go</button>
+                </form>
+            </div>
+        </div>
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4>Info</h4>
+            </div>
+            <div id="info-card-body" class="p-3">
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h4>Messages</h4>
+            </div>
+            <div class="p-3">
+                <form id="message-form">
+                    <div class="form-group mb-3">
+                        <label for="message">New message</label>
+                        <input type="text" class="form-control" id="message" placeholder="Express yourself" required
+                               disabled>
+                    </div>
+                    <button class="btn btn-primary">Go</button>
+                </form>
+                <div id="messages-card-body">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
-<script>
-    /***************************************************************************
-     * This function returns the current date and time in the following format:
-     * YYYY-MM-DD HH:MM:SS
-     *
-     * @returns {string} The formatted date and time
-     * */
-    function getFormattedDate() {
-        const date = new Date();
-        const str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        return str;
-    }
-
-    // Create a <p> tag
-    const p = document.createElement("p");
-    p.innerText = `The time is ${getFormattedDate()} !`;
-
-    // Onload ensure that the script runs after the page has loaded, we can
-    // manipulate all the elements in the DOM.
-    window.onload = function () {
-
-        // Add a <p> at the end of the body
-        document.body.appendChild(p);
-        // Every 1 second, update the time in the <p> tag
-        setInterval(() => {
-            p.innerText = `The time is ${getFormattedDate()} !`;
-        }, 1000);
-    };
-</script>
+<script src="chat.js"></script>
+<script src="/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </html>
