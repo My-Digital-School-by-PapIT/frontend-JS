@@ -1,12 +1,33 @@
+"use strict";
+const SERVER_IP_PORT = "http://localhost:3000";
+const REFRESH_TIMEOUT_MS = 1000;
+
+/*******************************************************************************
+ * A class that represents a Chatter
+ */
 class Chatter {
+    /***************************************************************************
+     * Method that is called when the geolocation is successful
+     * @param {Promise} resolve - The resolve function of the Promise
+     * @param {Position} position - The position object
+     */
     static geolocationSuccess(resolve, position) {
         resolve(position);
     }
 
+    /***************************************************************************
+     * Method that is called when the geolocation fails
+     * @param {Promise} reject - The reject function of the Promise
+     * @param {PositionError} err - The error object
+     */
     static geolocationError(reject, err) {
         reject(null);
     }
 
+    /***************************************************************************
+     * Method that returns the current position
+     * @returns {Promise} - The Promise object
+     */
     static getPosition() {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(
@@ -16,10 +37,16 @@ class Chatter {
         });
     }
 
+    /***************************************************************************
+     * Constructor of the Chatter class
+     * @param {Number} id - The id of the Chatter
+     * @param {String} name - The name of the Chatter
+     */
     constructor(id, name = "Anonymous") {
         this.id = id;
         this.name = name;
-        this.messages = [];
+        this.myMessages = [];
+        this.allMessages = [];
         Chatter.getPosition().then(position => {
             this.latitude = position.coords.latitude;
             this.longitude = position.coords.longitude;
@@ -30,45 +57,126 @@ class Chatter {
         this.hostname = location.hostname;
         // Use screen object to define if the user is on a mobile device or not
         this.isMobile = screen.orientation.type.includes("portrait");
-        // Set the hash as the id
-        location.hash = location.hash = `#${this.id}`;
     }
 
-    // Méthode qui retourne tous les messages
+    /***************************************************************************
+     * Method that returns all messages of the current Chatter
+     * @returns {Array} - The array of messages of the Message class
+     */
+    getAllMyMessages() {
+        let url = `${SERVER_IP_PORT}/v1/${this.id}/messages`;
+        fetch(url).then(
+            response => response.json()
+        ).then(messages => {
+            this.myMessages = messages;
+        }).catch(
+            error => console.log(error)
+        );
+    }
+
+    /***************************************************************************
+     * Method that returns the last five messages of the current Chatter
+     * @returns {Array} - The array of messages of the Message class
+     */
+    getMyLastFiveMessages() {
+        return this.myMessages.slice(-5);
+    }
+
+    /***************************************************************************
+     * Method that returns all messages of all Chatters
+     * @returns {Array} - The array of messages of the Message class
+     */
     getAllMessages() {
-        return this.messages;
+        fetch(`${SERVER_IP_PORT}/v1/messages/last-hundred`).then(
+            response => response.json()
+        ).then(messages => {
+            this.allMessages = messages;
+            console.log(messages);
+        }).catch(
+            error => console.log(error)
+        );
     }
 
-    // Méthode qui retourne les 5 derniers messages
-    getLastFiveMessages() {
-        return this.messages.slice(-5);
-    }
-
-    // Méthode qui permet l'ajout d'un message
+    /***************************************************************************
+     * Method that add a message to the current Chatter
+     * @param {Message} - The message to add
+     */
     addMessage(message) {
-        this.messages.unshift(message);
-        history.pushState({messageId: message.id}, null, `#${message.id}`);
+        // POST on /v1/message using fetch API
+        fetch(`${SERVER_IP_PORT}/v1/message`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: message.content,
+                id: message.id,
+                userId: this.id,
+                userName: this.name,
+                date: message.date
+            })
+        }).then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
     }
 
-    // get a message by its id
+    /***************************************************************************
+     * Method that returns a message by its id
+     * @param {Number} id - The id of the message
+     * @returns {Message} - The message object
+     */
     getMessageById(id) {
-        return this.messages.find(message => message.id === id);
+        return this.myMessages.find(message => message.id === id);
     }
 
-    // Méthode qui ramène toutes les informations
-    getAllInfo() {
+    /***************************************************************************
+     * Method that returns all information of the current Chatter
+     * The information is sent to the server
+     * @returns {Object} - The object containing all information of the Chatter
+     */
+    allInfo() {
+        if (!this.hasOwnProperty('latitude') || !this.hasOwnProperty('longitude')) {
+            this.latitude = 0;
+            this.longitude = 0;
+        }
+        // POST on /v1/chatter
+        fetch(`${SERVER_IP_PORT}/v1/chatter`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: this.id,
+                name: this.name,
+                hostname: this.hostname,
+                messageNumber: this.myMessages.length,
+                latitude: this.latitude,
+                longitude: this.longitude,
+            })
+        }).then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
         return {
             id: this.id,
             name: this.name,
             hostname: this.hostname,
-            messageNumber: this.messages.length,
+            messageNumber: this.myMessages.length,
+            isMobile: this.isMobile,
             latitude: this.latitude,
             longitude: this.longitude,
         };
     }
 }
 
+/*******************************************************************************
+ * The structure of a message
+ **/
 class Message {
+    /*
+    * Constructor of the message class
+    * @param {String} content - The content of the message
+    * @param {String} chatterName - The name of the Chatter
+    * */
     constructor(content, chatterName) {
         this.id = Number(Math.random().toString(10).slice(2));
         this.userName = chatterName;
@@ -84,7 +192,9 @@ class Message {
  @param {HTMLInputElement} messageInputElement - The message input to
   disable/enable
  */
-function updateWebUI(chatter, messageInputElement) {
+function updateWebUIAndMessages(chatter, messageInputElement) {
+    chatter.getAllMessages();
+    chatter.getAllMyMessages();
     updateInfoCard(chatter);
     updateMessageList(chatter, messageInputElement);
 }
@@ -116,7 +226,7 @@ function updateInfoCard(chatter) {
     cardBody.prepend(idP);
     // Message Number
     let messageNumberSpan = document.createElement('span');
-    messageNumberSpan.textContent = chatter.messages.length;
+    messageNumberSpan.textContent = chatter.myMessages.length;
     let messageNumberP = document.createElement('p');
     messageNumberP.textContent = "Message Number: ";
     messageNumberP.append(messageNumberSpan);
@@ -174,19 +284,20 @@ function updateMessageList(chatter, messageInputElement) {
     while (messagesCardBody.firstChild) {
         messagesCardBody.removeChild(messagesCardBody.lastChild);
     }
-    for (let i = 0; i < chatter.messages.length; i++) {
+    for (let i = 0; i < chatter.allMessages.length; i++) {
         let card = document.createElement('div');
         card.classList.add('card', 'mt-2');
         let cardHeader = document.createElement('div');
         cardHeader.classList.add('card-header');
         let header = document.createElement('h5');
-        header.textContent = `${chatter.name}, le ${chatter.messages[i].date.toLocaleString()}`;
+        let messageDate = new Date(chatter.allMessages[i].date);
+        header.textContent = `${chatter.allMessages[i].userName}, le ${messageDate.toLocaleString()}`;
         cardHeader.append(header);
         card.append(cardHeader);
         let content = document.createElement('div');
         content.classList.add('p-3');
         let contentP = document.createElement('p');
-        contentP.textContent = chatter.messages[i].content;
+        contentP.textContent = chatter.allMessages[i].content;
         content.append(contentP);
         card.append(content);
         messagesCardBody.append(card);
@@ -209,34 +320,34 @@ document.addEventListener('DOMContentLoaded', function () {
     let chatterID = null;
     let chatter = null;
 
-    // Location
-    if (location.hash !== "") {
-        chatterID = Number(location.hash.slice(1));
-        inputs[0].value = "Anonymous";
-        inputs[1].value = chatterID;
-        chatter = new Chatter(chatterID);
-        document.title = `Chatter ${chatterID}`;
-        updateWebUI(chatter, messageInputElement);
+    // if parameters id and name are passed in the URL
+    let url = new URL(location.href);
+    let id = url.searchParams.get("id");
+    let name = url.searchParams.get("name");
+    if (id && name) {
+        inputs[0].value = name;
+        inputs[1].value = id;
+        chatterID = Number(id);
+        chatter = new Chatter(chatterID, name);
+        document.title = `Chatter ${name}`;
+        chatter.allInfo();
+        setInterval(updateWebUIAndMessages, REFRESH_TIMEOUT_MS, chatter, messageInputElement);
     }
-
     // Add event listener to the button
     chatterForm.addEventListener('submit', function (event) {
         event.preventDefault()
         let chatterName = inputs[0].value;
         document.title = `Chatter ${chatterName}`;
-        if (chatterID == null) {
-            chatterID = inputs[1].value;
-        }
+        Number(chatterID = inputs[1].value);
         chatter = new Chatter(chatterID, chatterName);
-        updateWebUI(chatter, messageInputElement);
+        chatter.allInfo();
+        setInterval(updateWebUIAndMessages, REFRESH_TIMEOUT_MS, chatter, messageInputElement);
     });
-
     // Message form event listener
     messageForm.addEventListener('submit', function (event) {
         event.preventDefault()
         chatter.addMessage(new Message(messageInputElement.value));
         messageInputElement.value = "";
-        updateWebUI(chatter, messageInputElement);
+        setInterval(updateWebUIAndMessages, REFRESH_TIMEOUT_MS, chatter, messageInputElement);
     })
-
 });

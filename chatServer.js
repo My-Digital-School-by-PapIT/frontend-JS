@@ -44,9 +44,8 @@ const Chatter = sequelize.define(
         },
         messageNumber: {
             type: Sequelize.INTEGER,
-            primaryKey: true,
             autoIncrement: false
-        },
+        }
     },
     {
         timestamps: false
@@ -89,12 +88,22 @@ sequelize.sync().then((result) => {
     }
 );
 
-// Helper class to return standardized message
+/*
+ * JSONMessage class to create JSON messages
+ */
 class JSONMessage {
+    /***************************************************************************
+     * Constructor of the JSONMessage class
+     * @param {string} text - The message text
+     **/
     constructor(text) {
         this.text = text
     }
 
+    /***************************************************************************
+     * Convert the JSONMessage object to a JSON object
+     * @return {object} - The JSON object
+     **/
     toJSON() {
         return {
             message: this.text
@@ -105,12 +114,36 @@ class JSONMessage {
 // To have a body in the POST request
 app.use(express.json());
 
-// Express server
+// All the GETs
+
+// Route serving the static index.html file and required CSS and JS
+app.get("/front", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
+app.get("/chat.js", (req, res) => {
+    res.sendFile(__dirname + "/chat.js");
+});
+app.get("/css/bootstrap.min.css", (req, res) => {
+    res.sendFile(__dirname + "/css/bootstrap.min.css");
+});
+app.get("/bootstrap.bundle.min.js", (req, res) => {
+    res.sendFile(__dirname + "/bootstrap.bundle.min.js");
+});
+app.get('/v1/messages/last-hundred', (req, res) => {
+    console.log('Last 100 messages from anyone')
+    Message.findAll({
+        order: [['date', 'DESC']],
+        limit: 100
+    }).then(messages => {
+        res.status(200).json(messages)
+    });
+});
+
+// Express server welcome message
 app.get('/', (req, res) => {
     res.send('Welcome to Chatter server, post messages and express your thoughts!')
 });
 
-// All the GETs
 app.get('/v1/:id/messages', (req, res) => {
     console.log('All messages of ID ' + req.params.id)
     Message.findAll({
@@ -201,13 +234,13 @@ app.post('/v1/chatter', (req, res) => {
             latitude: req.body.latitude,
             longitude: req.body.longitude,
             hostname: req.body.hostname,
-            isMobile: req.body.isMobile,
             messageNumber: req.body.messageNumber
         }).then(() => {
             res.status(200).json(
                 new JSONMessage(`Chatter ${req.body.id} added to database`).toJSON()
             )
         }).catch((err) => {
+                console.error(err);
                 res.status(400).json(
                     new JSONMessage(err).toJSON()
                 );

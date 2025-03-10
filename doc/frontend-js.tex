@@ -3091,7 +3091,7 @@ fetchData().then(
         Une promise qui ne fonctionne pas, on passe dans catch.
         \begin{lstlisting}[language=JavaScript,title={\tiny{Script JavaScript}}]
 async function fetchData() {
-    // NOTEZ QUE L'ADRESSE EST FAUT C4EST COIASE AU LIEU DE COINBASE
+    // NOTEZ QUE L'ADRESSE EST FAUT C'EST COIASE AU LIEU DE COINBASE
     const response = await fetch("https://api.coiase.com/v2/exchange-rates?currency=BTC");
     const data = await response.json();
     console.log(data);
@@ -3101,6 +3101,7 @@ fetchData().then(
 ).catch(
     () => console.log('Erreur de fetch')
 );
+console.log("Juste après l'appel à fetchData")
         \end{lstlisting}
     \end{frame}
 
@@ -3170,6 +3171,13 @@ async function postData(url = "", donnees = {}) {
                         \item Méthode: \lstinline{app.get('/v1/:userId/messages')}
                     \end{tiny}
                 \end{itemize}
+                \item \textbf{GET /v1/messages/last-hundred}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Récupère les 100 derniers messages de tous les utilisateurs.
+                        \item Méthode: \lstinline{app.get('/v1/messages/last-hundred')}
+                    \end{tiny}
+                \end{itemize}
                 \item \textbf{GET /v1/:userId/messages/last-five}
                 \begin{itemize}
                     \begin{tiny}
@@ -3196,35 +3204,46 @@ async function postData(url = "", donnees = {}) {
     \end{frame}
 
     \begin{frame}{Routes \lstinline{POST} du serveur \lstinline{ChatServer.js}}
-        \begin{itemize}
-            \item \textbf{POST /v1/message}
+        \begin{small}
             \begin{itemize}
-                \item Description: Ajoute un nouveau message.
-                \item Méthode: \lstinline{app.post('/v1/message')}
-                \item Paramètres:
+                \item \textbf{POST /v1/message}
                 \begin{itemize}
-                    \item \lstinline{content} (string) - Le contenu du message.
-                    \item \lstinline{id} (integer) - L'ID unique du message.
-                    \item \lstinline{userId} (integer) - L'ID de l'utilisateur qui envoie le message.
-                    \item \lstinline{date} (date) - La date et l'heure d'envoi du message.
+                    \begin{tiny}
+                        \item Description: Ajoute un nouveau message.
+                        \item Méthode: \lstinline{app.post('/v1/message')}
+                        \item Paramètres:
+                        \begin{itemize}
+                            \begin{tiny}
+                                \item \lstinline{content} (string) - Le contenu du message.
+                                \item \lstinline{id} (integer) - L'ID unique du message.
+                                \item \lstinline{userId} (integer) - L'ID de l'utilisateur qui envoie le message.
+                                \item \lstinline{userName} (string) - Nom de l'utilisateur qui envoie le message.
+                                \item \lstinline{date} (date) - La date et l'heure d'envoi du message.
+                            \end{tiny}
+                        \end{itemize}
+                    \end{tiny}
+                \end{itemize}
+                \item \textbf{POST /v1/chatter}
+                \begin{itemize}
+                    \begin{tiny}
+                        \item Description: Ajoute un nouvel utilisateur.
+                        \item Méthode: \lstinline{app.post('/v1/chatter')}
+                        \item Paramètres:
+                        \begin{itemize}
+                            \begin{tiny}
+                                \item \lstinline{name} (string) - Le nom de l'utilisateur.
+                                \item \lstinline{id} (integer) - L'ID unique de l'utilisateur.
+                                \item \lstinline{latitude} (float) - La latitude de la position de l'utilisateur.
+                                \item \lstinline{longitude} (float) - La longitude de la position de l'utilisateur.
+                                \item \lstinline{hostname} (string) - Le nom d'hôte de l'utilisateur.
+                                \item \lstinline{isMobile} (boolean) - Indique si l'utilisateur utilise un appareil mobile.
+                                \item \lstinline{messageNumber} (integer) - Le nombre de messages envoyés par l'utilisateur.
+                            \end{tiny}
+                        \end{itemize}
+                    \end{tiny}
                 \end{itemize}
             \end{itemize}
-            \item \textbf{POST /v1/chatter}
-            \begin{itemize}
-                \item Description: Ajoute un nouvel utilisateur.
-                \item Méthode: \lstinline{app.post('/v1/chatter')}
-                \item Paramètres:
-                \begin{itemize}
-                    \item \lstinline{name} (string) - Le nom de l'utilisateur.
-                    \item \lstinline{id} (integer) - L'ID unique de l'utilisateur.
-                    \item \lstinline{latitude} (float) - La latitude de la position de l'utilisateur.
-                    \item \lstinline{longitude} (float) - La longitude de la position de l'utilisateur.
-                    \item \lstinline{hostname} (string) - Le nom d'hôte de l'utilisateur.
-                    \item \lstinline{isMobile} (boolean) - Indique si l'utilisateur utilise un appareil mobile.
-                    \item \lstinline{messageNumber} (integer) - Le nombre de messages envoyés par l'utilisateur.
-                \end{itemize}
-            \end{itemize}
-        \end{itemize}
+        \end{small}
     \end{frame}
 
     \begin{frame}{Communication client/serveur}{Exercice \execcounterdispinc{}}
